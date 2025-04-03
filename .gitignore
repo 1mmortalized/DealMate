@@ -1,0 +1,59 @@
+.externalNativeBuild
+.cxx
+
+# Gradle files
+.gradle/
+**/build/
+!gradle-wrapper.jar
+gradle.properties
+gradlew
+gradlew.bat
+
+# Local configuration
+/local.properties
+/.idea/
+/.kotlin/
+*.iml
+*.iws
+*.ipr
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log
+
+# Android build output
+*.apk
+*.aab
+*.dex
+*.so
+*.jar
+*.keystore
+
+# Captures and screenshots
+/screencapture/
+
+/.gradle/
+/.idea/caches/
+/.idea/libraries/
+/.idea/modules.xml
+.idea/.gitignore
+
+/*.keystore
+/.signing/
+
+/build/
+/app/build/
+/captures/
+
+/crashlytics.properties
+/crashlytics-build.properties
+/firebase/
+
+# VSCode
+.vscode/
+
+# Mac system files
+*.DS_Store

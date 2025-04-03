@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CalenderView">
+        <attr name="headerTextColorCV" format="color"/>
+        <attr name="headerTextSizeCV" format="float"/>
+        <attr name="dateTextColorCV" format="color"/>
+        <attr name="dateTextSizeCV" format="float"/>
+        <attr name="selectBackColorCV" format="color"/>
+        <attr name="selectTextColorCV" format="color"/>
+        <attr name="selectTextSizeCV" format="float"/>
+    </declare-styleable>
+</resources>
