@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -14,6 +15,7 @@ import com.bizsolutions.dealmate.ui.home.calendar.CalendarAdapter
 import com.bizsolutions.dealmate.ui.home.calendar.CalendarViewModel
 import com.bizsolutions.dealmate.ui.home.calendar.CenterLinearLayoutManager
 import com.bizsolutions.dealmate.ui.home.calendar.DayPagerAdapter
+import java.time.format.DateTimeFormatter
 
 class HomeFragment : Fragment() {
 
@@ -36,7 +38,7 @@ class HomeFragment : Fragment() {
         val recyclerView = binding.recyclerView
         val viewPager = binding.viewPager
 
-        val calendarAdapter = CalendarAdapter(calendarViewModel) { date ->
+        val calendarAdapter = CalendarAdapter(requireContext(), calendarViewModel) { date ->
             val newPosition = calendarViewModel.getPageForDate(date)
             viewPager.setCurrentItem(newPosition, true)
         }
@@ -52,12 +54,22 @@ class HomeFragment : Fragment() {
         viewPager.adapter = DayPagerAdapter(requireActivity(), calendarViewModel)
         viewPager.setCurrentItem(calendarViewModel.baseIndex, false)
 
+        setMonthText(calendarViewModel.baseIndex)
+        binding.todayBtn.isInvisible = true
+
         viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 recyclerView.smoothScrollToPosition(position)
                 calendarAdapter.selectItem(position)
+                setMonthText(position)
+
+                binding.todayBtn.isInvisible = calendarViewModel.baseIndex == position
             }
         })
+
+        binding.todayBtn.setOnClickListener {
+            viewPager.setCurrentItem(calendarViewModel.baseIndex, true)
+        }
 
         return binding.root
     }
@@ -65,5 +77,12 @@ class HomeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun setMonthText(listPosition: Int) {
+        binding.monthTxt.text =
+            calendarViewModel.getDateForPosition(listPosition)
+                .format(DateTimeFormatter.ofPattern("LLLL yyyy"))
+                .replaceFirstChar { it.uppercase() }
     }
 }

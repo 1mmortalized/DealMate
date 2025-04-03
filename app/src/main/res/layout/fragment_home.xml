@@ -5,12 +5,57 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:animateLayoutChanges="true">
+
+        <Button
+            android:id="@+id/placeholderTodayBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:text="@string/today_btn_txt"
+            android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/monthTxt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+            android:ellipsize="none"
+            android:requiresFadingEdge="horizontal"
+            android:singleLine="true"
+            android:fadingEdgeLength="20dp"
+            tools:text="January 2025" />
+
+        <Button
+            android:id="@+id/todayBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:text="@string/today_btn_txt" />
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:requiresFadingEdge="horizontal"
+        android:fadingEdgeLength="20dp"
         tools:listitem="@layout/item_calendar"
-        android:orientation="horizontal"/>
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
