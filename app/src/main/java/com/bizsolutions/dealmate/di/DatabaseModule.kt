@@ -4,8 +4,10 @@ import android.content.Context
 import com.bizsolutions.dealmate.db.AppDatabase
 import com.bizsolutions.dealmate.db.ClientDao
 import com.bizsolutions.dealmate.db.EventDao
+import com.bizsolutions.dealmate.db.TaskDao
 import com.bizsolutions.dealmate.repository.ClientRepository
 import com.bizsolutions.dealmate.repository.EventRepository
+import com.bizsolutions.dealmate.repository.TaskRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,4 +35,10 @@ object DatabaseModule {
 
     @Provides
     fun provideEventRepository(dao: EventDao): EventRepository = EventRepository(dao)
+
+    @Provides
+    fun provideTaskDao(database: AppDatabase): TaskDao = database.taskDao()
+
+    @Provides
+    fun provideTaskRepository(dao: TaskDao): TaskRepository = TaskRepository(dao)
 }

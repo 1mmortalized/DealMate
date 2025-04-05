@@ -5,17 +5,19 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
 
 @Dao
-interface EventDao {
-    @Query("SELECT * FROM events WHERE date = :date ORDER BY timeStart ASC, id DESC")
-    fun getAllEventsByDate(date: LocalDate): Flow<List<EventEntity>>
+interface TaskDao {
+    @Transaction
+    @Query("SELECT * FROM tasks WHERE date = :date ORDER BY priority ASC, id DESC")
+    fun getAllTasksByDate(date: LocalDate): Flow<List<TaskWithClient>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertEvent(client: EventEntity)
+    suspend fun insertTask(task: TaskEntity)
 
     @Delete
-    suspend fun deleteEvent(client: EventEntity)
+    suspend fun deleteTask(task: TaskEntity)
 }

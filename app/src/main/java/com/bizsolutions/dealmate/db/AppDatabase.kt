@@ -20,6 +20,7 @@ import java.time.LocalTime
 abstract class AppDatabase : RoomDatabase() {
     abstract fun clientDao(): ClientDao
     abstract fun eventDao(): EventDao
+    abstract fun taskDao(): TaskDao
 
     companion object {
         @Volatile
