@@ -3,7 +3,9 @@ package com.bizsolutions.dealmate.di
 import android.content.Context
 import com.bizsolutions.dealmate.db.AppDatabase
 import com.bizsolutions.dealmate.db.ClientDao
+import com.bizsolutions.dealmate.db.EventDao
 import com.bizsolutions.dealmate.repository.ClientRepository
+import com.bizsolutions.dealmate.repository.EventRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,5 +26,11 @@ object DatabaseModule {
     fun provideClientDao(database: AppDatabase): ClientDao = database.clientDao()
 
     @Provides
-    fun provideRepository(dao: ClientDao): ClientRepository = ClientRepository(dao)
+    fun provideClientRepository(dao: ClientDao): ClientRepository = ClientRepository(dao)
+
+    @Provides
+    fun provideEventDao(database: AppDatabase): EventDao = database.eventDao()
+
+    @Provides
+    fun provideEventRepository(dao: EventDao): EventRepository = EventRepository(dao)
 }

@@ -4,10 +4,22 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverter
+import androidx.room.TypeConverters
+import java.time.LocalDate
+import java.time.LocalTime
 
-@Database(entities = [ClientEntity::class], version = 1, exportSchema = false)
+@Database(entities = [
+    ClientEntity::class,
+    TaskEntity::class,
+    EventEntity::class,
+    CallEntity::class,
+    DealEntity::class],
+    version = 1, exportSchema = false)
+@TypeConverters(MyTypeConverters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun clientDao(): ClientDao
+    abstract fun eventDao(): EventDao
 
     companion object {
         @Volatile
@@ -24,5 +36,27 @@ abstract class AppDatabase : RoomDatabase() {
                 instance
             }
         }
+    }
+}
+
+private class MyTypeConverters {
+    @TypeConverter
+    fun localDateFromTimestamp(value: Long?): LocalDate? {
+        return value?.let { LocalDate.ofEpochDay(value) }
+    }
+
+    @TypeConverter
+    fun localDateToTimestamp(date: LocalDate?): Long? {
+        return date?.toEpochDay()
+    }
+
+    @TypeConverter
+    fun localTimeFromTimestamp(value: Int?): LocalTime? {
+        return value?.let { LocalTime.ofSecondOfDay(value.toLong()) }
+    }
+
+    @TypeConverter
+    fun localTimeToTimestamp(time: LocalTime?): Int? {
+        return time?.toSecondOfDay()
     }
 }

@@ -6,4 +6,5 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_deals">Deals</string>
     <string name="today_btn_txt">Today</string>
+    <string name="events_section_title">Events</string>
 </resources>

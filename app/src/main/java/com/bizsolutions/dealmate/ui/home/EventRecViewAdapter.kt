@@ -1,0 +1,83 @@
+package com.bizsolutions.dealmate.ui.home
+
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.bizsolutions.dealmate.databinding.ItemEventBinding
+import com.bizsolutions.dealmate.db.EventEntity
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
+
+
+class EventRecViewAdapter(
+    private val onEditMenuItemClicked: (EventEntity) -> Unit,
+    private val onDeleteMenuItemClicked: (EventEntity) -> Unit
+) :
+    ListAdapter<EventEntity, EventRecViewAdapter.EventViewHolder>(DiffCallback) {
+
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): EventViewHolder {
+        val binding =
+            ItemEventBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return EventViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
+        val event = getItem(position)
+        val binding = holder.binding
+
+        binding.itemEventTitleTxt.text = event.title
+        binding.itemEventTimeTxt.text = event.timeStart.format(
+            DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)
+        )
+
+//        val popupMenu = PopupMenu(context, holder.binding.itemBookQuoteMenuBtn)
+//        popupMenu.menuInflater.inflate(R.menu.quote_item_menu, popupMenu.menu)
+//        popupMenu.setupOptionalIcons(context)
+//
+//        popupMenu.setOnMenuItemClickListener { menuItem ->
+//            when (menuItem.itemId) {
+//                R.id.quote_item_menu_item_edit -> onEditMenuItemClicked(quote)
+//                R.id.quote_item_menu_item_copy -> {
+//                    val clipboard: ClipboardManager? =
+//                        context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
+//
+//                    clipboard?.let {
+//                        val clip = ClipData.newPlainText("quote_text_clip", quote.text)
+//                        clipboard.setPrimaryClip(clip)
+//                    }
+//                }
+//
+//                R.id.quote_item_menu_item_select_text -> onSelectTextMenuItemClicked(quote.text)
+//                R.id.quote_item_menu_item_delete -> onDeleteMenuItemClicked(quote)
+//            }
+//
+//            true
+//        }
+//
+//        holder.binding.itemBookQuoteMenuBtn.setOnClickListener {
+//            popupMenu.show()
+//        }
+
+
+    }
+
+
+    inner class EventViewHolder(val binding: ItemEventBinding) : ViewHolder(binding.root)
+
+    companion object {
+        private val DiffCallback = object : DiffUtil.ItemCallback<EventEntity>() {
+            override fun areItemsTheSame(oldItem: EventEntity, newItem: EventEntity): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            override fun areContentsTheSame(oldItem: EventEntity, newItem: EventEntity): Boolean {
+                return oldItem == newItem
+            }
+        }
+    }
+}
