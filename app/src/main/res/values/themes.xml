@@ -50,4 +50,9 @@
         <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
+
+    <style name="TextAppearance.DealMate.AppTitle" parent="TextAppearance.Material3.TitleLarge">
+        <item name="fontFamily">@font/gruppo_family</item>
+        <item name="android:letterSpacing">0.5</item>
+    </style>
 </resources>

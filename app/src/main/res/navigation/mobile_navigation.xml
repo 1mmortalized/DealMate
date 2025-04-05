@@ -8,6 +8,12 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.bizsolutions.dealmate.ui.home.HomeFragment"
-        android:label="Home"
+        android:label=""
         tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/navigation_contacts"
+        android:name="com.bizsolutions.dealmate.ui.contacts.ContactsFragment"
+        android:label="@string/title_contacts"
+        tools:layout="@layout/fragment_contacts" />
 </navigation>

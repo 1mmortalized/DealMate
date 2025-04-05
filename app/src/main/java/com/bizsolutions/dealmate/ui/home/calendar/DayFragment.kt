@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.bizsolutions.dealmate.databinding.FragmentDayBinding
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 class DayFragment : Fragment() {
     private var _binding: FragmentDayBinding? = null
@@ -18,9 +17,6 @@ class DayFragment : Fragment() {
 
         val epochDay = arguments?.getLong("epochDay") ?: 0L
         val date = LocalDate.ofEpochDay(epochDay)
-
-        val formattedDate = date.format(DateTimeFormatter.ofPattern("MMMM d, yyyy"))
-        binding.textViewDay.text = "Content for $formattedDate"
 
         return binding.root
     }

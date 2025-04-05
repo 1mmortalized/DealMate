@@ -6,6 +6,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.navigation.findNavController
@@ -47,11 +48,15 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.activity_main_nav_host_fragment).apply {
             val navGraph = navInflater.inflate(R.navigation.mobile_navigation)
             graph = navGraph
+
+            addOnDestinationChangedListener { _, destination, _ ->
+                binding.homeAppTitleTxt.isVisible = destination.id == R.id.navigation_home
+            }
         }
 
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home
+                R.id.navigation_home, R.id.navigation_contacts
             )
         )
 

@@ -35,7 +35,7 @@ class HomeFragment : Fragment() {
 
         calendarViewModel = ViewModelProvider(this)[CalendarViewModel::class.java]
 
-        val recyclerView = binding.recyclerView
+        val recyclerView = binding.calendarRecView
         val viewPager = binding.viewPager
 
         val calendarAdapter = CalendarAdapter(requireContext(), calendarViewModel) { date ->
