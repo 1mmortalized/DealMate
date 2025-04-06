@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.bizsolutions.dealmate.db.EventEntity
+import com.bizsolutions.dealmate.repository.CallRepository
 import com.bizsolutions.dealmate.repository.EventRepository
 import com.bizsolutions.dealmate.repository.TaskRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,10 +16,12 @@ import javax.inject.Inject
 @HiltViewModel
 class DayViewModel @Inject constructor(
     val eventRepository: EventRepository,
-    val taskRepository: TaskRepository
+    val taskRepository: TaskRepository,
+    val callRepository: CallRepository
 ) : ViewModel() {
     fun getEventsByDate(date: LocalDate) = eventRepository.allEventsByDate(date).asLiveData()
     fun getTasksByDate(date: LocalDate) = taskRepository.allTasksByDate(date).asLiveData()
+    fun getCallsByDate(date: LocalDate) = callRepository.allCallsByDate(date).asLiveData()
 
     fun addEvent(title: String, timeStart: LocalTime, timeEnd: LocalTime, date: LocalDate, completed: Boolean = false) {
         viewModelScope.launch {

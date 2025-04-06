@@ -21,6 +21,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun clientDao(): ClientDao
     abstract fun eventDao(): EventDao
     abstract fun taskDao(): TaskDao
+    abstract fun callDao(): CallDao
+    abstract fun dealDao(): DealDao
 
     companion object {
         @Volatile

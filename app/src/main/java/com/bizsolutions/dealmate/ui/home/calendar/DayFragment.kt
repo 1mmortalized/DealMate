@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bizsolutions.dealmate.R
 import com.bizsolutions.dealmate.databinding.FragmentDayBinding
+import com.bizsolutions.dealmate.ui.home.CallRecViewAdapter
 import com.bizsolutions.dealmate.ui.home.DayViewModel
 import com.bizsolutions.dealmate.ui.home.EventRecViewAdapter
 import com.bizsolutions.dealmate.ui.home.TaskRecViewAdapter
@@ -27,6 +28,9 @@ class DayFragment : Fragment() {
     private var _taskAdapter: TaskRecViewAdapter? = null
     private val taskAdapter get() = _taskAdapter!!
 
+    private var _callAdapter: CallRecViewAdapter? = null
+    private val callAdapter get() = _callAdapter!!
+
     private val viewModel: DayViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -37,6 +41,7 @@ class DayFragment : Fragment() {
 
         setupEvents(date)
         setupTasks(date)
+        setupCalls(date)
 
         return binding.root
     }
@@ -82,6 +87,28 @@ class DayFragment : Fragment() {
 
         viewModel.getTasksByDate(date).observe(viewLifecycleOwner) { list ->
             taskAdapter.submitList(list)
+        }
+    }
+
+    private fun setupCalls(date: LocalDate) {
+        _callAdapter = CallRecViewAdapter(
+            {}, {}
+        )
+        binding.fragmentDayCallsRecView.adapter = callAdapter
+
+        val taskItem = layoutInflater.inflate(R.layout.item_call, binding.root, false)
+
+        //Returns wrong width but the height is alright
+        val widthSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED)
+        val heightSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED)
+        taskItem.measure(widthSpec, heightSpec)
+
+        val totalHeight = taskItem.measuredHeight * 3 + taskItem.marginBottom * 2
+        binding.fragmentDayCallsRecView.layoutParams.height = totalHeight
+        binding.fragmentDayCallsRecView.requestLayout()
+
+        viewModel.getCallsByDate(date).observe(viewLifecycleOwner) { list ->
+            callAdapter.submitList(list)
         }
     }
 

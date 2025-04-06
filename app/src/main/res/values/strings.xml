@@ -7,6 +7,7 @@
     <string name="today_btn_txt">Today</string>
     <string name="events_section_title">Events</string>
     <string name="tasks_section_title">Tasks</string>
+    <string name="calls_section_title">Calls</string>
     <string name="priority_low">Low</string>
     <string name="priority_medium">Medium</string>
     <string name="priority_high">High</string>
