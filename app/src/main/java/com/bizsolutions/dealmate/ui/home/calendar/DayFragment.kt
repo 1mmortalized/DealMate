@@ -1,5 +1,6 @@
 package com.bizsolutions.dealmate.ui.home.calendar
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,9 @@ import android.view.ViewGroup
 import androidx.core.view.marginBottom
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LiveData
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.bizsolutions.dealmate.R
 import com.bizsolutions.dealmate.databinding.FragmentDayBinding
 import com.bizsolutions.dealmate.ui.home.CallRecViewAdapter
@@ -46,70 +50,70 @@ class DayFragment : Fragment() {
         return binding.root
     }
 
-    private fun setupEvents(date: LocalDate) {
-        _eventAdapter = EventRecViewAdapter(
-            {}, {}
-        )
-        binding.fragmentDayEventsRecView.adapter = eventAdapter
+    private fun <T> setupRecyclerView(
+        recyclerView: RecyclerView,
+        itemLayout: Int,
+        adapter: ListAdapter<T, *>,
+        getItems: (LocalDate) -> LiveData<List<T>>,
+        date: LocalDate
+    ) {
+        recyclerView.adapter = adapter
 
-        val eventItem = layoutInflater.inflate(R.layout.item_event, binding.root, false)
+        val itemView = layoutInflater.inflate(itemLayout, binding.root, false)
 
-        //Returns wrong width but the height is alright
+        // Returns wrong width but the height is alright
         val widthSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED)
         val heightSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED)
-        eventItem.measure(widthSpec, heightSpec)
+        itemView.measure(widthSpec, heightSpec)
 
-        val totalHeight = eventItem.measuredHeight * 3 + eventItem.marginBottom * 2
-        binding.fragmentDayEventsRecView.layoutParams.height = totalHeight
-        binding.fragmentDayEventsRecView.requestLayout()
+        val totalHeight = itemView.measuredHeight * 3 + itemView.marginBottom * 2
+        recyclerView.layoutParams.height = totalHeight
+        recyclerView.requestLayout()
 
-        viewModel.getEventsByDate(date).observe(viewLifecycleOwner) { list ->
-            eventAdapter.submitList(list)
+        getItems(date).observe(viewLifecycleOwner) { list ->
+            adapter.submitList(list)
         }
+
+        @SuppressLint("ClickableViewAccessibility")
+        recyclerView.setOnTouchListener { v, event ->
+            if (recyclerView.canScrollVertically(1) || recyclerView.canScrollVertically(-1)) {
+                v.parent?.parent?.requestDisallowInterceptTouchEvent(true)
+            }
+            false
+        }
+    }
+
+    private fun setupEvents(date: LocalDate) {
+        _eventAdapter = EventRecViewAdapter({}, {})
+        setupRecyclerView(
+            binding.fragmentDayEventsRecView,
+            R.layout.item_event,
+            eventAdapter,
+            { viewModel.getEventsByDate(date) },
+            date
+        )
     }
 
     private fun setupTasks(date: LocalDate) {
-        _taskAdapter = TaskRecViewAdapter(
-            {}, {}
+        _taskAdapter = TaskRecViewAdapter({}, {})
+        setupRecyclerView(
+            binding.fragmentDayTasksRecView,
+            R.layout.item_task,
+            taskAdapter,
+            { viewModel.getTasksByDate(date) },
+            date
         )
-        binding.fragmentDayTasksRecView.adapter = taskAdapter
-
-        val taskItem = layoutInflater.inflate(R.layout.item_task, binding.root, false)
-
-        //Returns wrong width but the height is alright
-        val widthSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED)
-        val heightSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED)
-        taskItem.measure(widthSpec, heightSpec)
-
-        val totalHeight = taskItem.measuredHeight * 3 + taskItem.marginBottom * 2
-        binding.fragmentDayTasksRecView.layoutParams.height = totalHeight
-        binding.fragmentDayTasksRecView.requestLayout()
-
-        viewModel.getTasksByDate(date).observe(viewLifecycleOwner) { list ->
-            taskAdapter.submitList(list)
-        }
     }
 
     private fun setupCalls(date: LocalDate) {
-        _callAdapter = CallRecViewAdapter(
-            {}, {}
+        _callAdapter = CallRecViewAdapter({}, {})
+        setupRecyclerView(
+            binding.fragmentDayCallsRecView,
+            R.layout.item_call,
+            callAdapter,
+            { viewModel.getCallsByDate(date) },
+            date
         )
-        binding.fragmentDayCallsRecView.adapter = callAdapter
-
-        val taskItem = layoutInflater.inflate(R.layout.item_call, binding.root, false)
-
-        //Returns wrong width but the height is alright
-        val widthSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED)
-        val heightSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED)
-        taskItem.measure(widthSpec, heightSpec)
-
-        val totalHeight = taskItem.measuredHeight * 3 + taskItem.marginBottom * 2
-        binding.fragmentDayCallsRecView.layoutParams.height = totalHeight
-        binding.fragmentDayCallsRecView.requestLayout()
-
-        viewModel.getCallsByDate(date).observe(viewLifecycleOwner) { list ->
-            callAdapter.submitList(list)
-        }
     }
 
     companion object {
