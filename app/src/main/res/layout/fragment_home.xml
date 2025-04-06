@@ -62,7 +62,8 @@
         android:fadingEdgeLength="20dp"
         tools:listitem="@layout/item_calendar"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp" />
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"

@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
             graph = navGraph
 
             addOnDestinationChangedListener { _, destination, _ ->
-                binding.homeAppTitleTxt.isVisible = destination.id == R.id.navigation_home
+                binding.homeAppTitleLayout.isVisible = destination.id == R.id.navigation_home
             }
         }
 

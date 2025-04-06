@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name" translatable="false">DealMate</string>
-    <string name="dealmate_title" translatable="false">DEALMATE</string>
     <string name="title_home">Home</string>
     <string name="title_contacts">Contacts</string>
     <string name="title_dashboard">Dashboard</string>
