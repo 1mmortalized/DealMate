@@ -7,14 +7,13 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bizsolutions.dealmate.databinding.ItemCallBinding
 import com.bizsolutions.dealmate.db.CallWithClient
-import com.bizsolutions.dealmate.db.TaskWithClient
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 
 
 class CallRecViewAdapter(
-    private val onEditMenuItemClicked: (TaskWithClient) -> Unit,
-    private val onDeleteMenuItemClicked: (TaskWithClient) -> Unit
+    private val onEditMenuItemClicked: (CallWithClient) -> Unit,
+    private val onDeleteMenuItemClicked: (CallWithClient) -> Unit
 ) :
     ListAdapter<CallWithClient, CallRecViewAdapter.CallViewHolder>(DiffCallback) {
 
