@@ -5,12 +5,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 
-class CenterLinearLayoutManager(context: Context, orientation: Int = RecyclerView.VERTICAL, reverseLayout: Boolean = false)
+class CenterLinearLayoutManager(private val context: Context, orientation: Int = RecyclerView.VERTICAL, reverseLayout: Boolean = false)
     : LinearLayoutManager(context, orientation, reverseLayout) {
 
-    private val smoothScroller = CenterSmoothScroller(context)
-
     override fun smoothScrollToPosition(recyclerView: RecyclerView, state: RecyclerView.State, position: Int) {
+        val smoothScroller = CenterSmoothScroller(context)
         smoothScroller.targetPosition = position
         startSmoothScroll(smoothScroller)
     }

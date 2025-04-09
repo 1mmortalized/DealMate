@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_contacts"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.recyclerview.widget.RecyclerView
+    <com.bizsolutions.dealmate.ui.contacts.BottomFadingEdgeRecyclerView
         android:id="@+id/fragment_contacts_rec_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:requiresFadingEdge="vertical"
         android:fadingEdgeLength="25dp"
+        android:clipToPadding="false"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     <com.wynneplaga.materialScrollBar2.MaterialScrollBar
@@ -17,5 +19,15 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         app:msb_recyclerView="@id/fragment_contacts_rec_view"
-        app:msb_handleColor="?colorSecondaryContainer" />
+        app:msb_handleColor="?colorSecondary" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fragment_contacts_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:visibility="invisible"
+        app:srcCompat="@drawable/ic_plus" />
 </FrameLayout>
