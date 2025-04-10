@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_deals"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/fragment_deals_total_income_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/fragment_deals_monthly_income_layout"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:textAppearance="?textAppearanceTitleMedium"
+                android:textColor="?colorSecondary"
+                android:text="Total income" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?textAppearanceTitleLarge"
+                android:textColor="?colorSecondary"
+                tools:text="20 000 USD" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/fragment_deals_monthly_income_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            app:layout_constraintStart_toEndOf="@id/fragment_deals_total_income_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:textAppearance="?textAppearanceTitleMedium"
+                android:textColor="?colorTertiary"
+                android:text="This month" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?textAppearanceTitleLarge"
+                android:textColor="?colorTertiary"
+                tools:text="1 500 USD" />
+        </LinearLayout>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/fragment_books_list_front_content_card"
+            style="@style/Widget.Material3.CardView.Filled"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:cardBackgroundColor="?colorSurfaceContainerLow"
+            app:cardPreventCornerOverlap="false"
+            app:shapeAppearance="@style/Theme.DealMate.DealListShape"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_deals_total_income_layout">
+
+            <com.bizsolutions.dealmate.ui.contacts.BottomFadingEdgeRecyclerView
+                android:id="@+id/fragment_deals_rec_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:requiresFadingEdge="vertical"
+                android:fadingEdgeLength="25dp"
+                android:clipToPadding="false"
+                android:layout_marginTop="16dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        </com.google.android.material.card.MaterialCardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fragment_deals_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="16dp"
+        android:visibility="invisible"
+        tools:visibility="visible"
+        app:srcCompat="@drawable/ic_plus" />
+</FrameLayout>

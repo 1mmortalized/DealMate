@@ -1,7 +1,5 @@
 package com.bizsolutions.dealmate.ui.contacts
 
-import android.content.Context
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.children
@@ -11,23 +9,14 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bizsolutions.dealmate.databinding.ItemContactBinding
 import com.bizsolutions.dealmate.db.ClientEntity
-import com.bizsolutions.dealmate.db.EventEntity
-import com.google.android.material.color.MaterialColors
 import com.wynneplaga.materialScrollBar2.inidicators.AlphabeticIndicator
 
 
 class ContactRecViewAdapter(
-    context: Context,
-    private val onEditMenuItemClicked: (EventEntity) -> Unit,
-    private val onDeleteMenuItemClicked: (EventEntity) -> Unit
+    private val onEditMenuItemClicked: (ClientEntity) -> Unit,
+    private val onDeleteMenuItemClicked: (ClientEntity) -> Unit
 ) :
     ListAdapter<ContactListItem, ContactRecViewAdapter.ContactViewHolder>(DiffCallback), AlphabeticIndicator.INameableAdapter {
-
-    private val colorSurfaceContainerLow = MaterialColors.getColor(
-        context,
-        com.google.android.material.R.attr.colorSurfaceContainerLow,
-        Color.BLACK
-    )
 
     fun groupSubmitList(list: List<ClientEntity>?) {
         val groupedList = list?.let { groupContactsByFirstLetter(it) }

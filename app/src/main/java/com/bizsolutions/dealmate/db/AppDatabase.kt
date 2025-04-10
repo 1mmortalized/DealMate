@@ -1,6 +1,7 @@
 package com.bizsolutions.dealmate.db
 
 import android.content.Context
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -15,7 +16,10 @@ import java.time.LocalTime
     EventEntity::class,
     CallEntity::class,
     DealEntity::class],
-    version = 1, exportSchema = false)
+    version = 2, exportSchema = true,
+    autoMigrations = [
+        AutoMigration(from = 1, to = 2),
+    ])
 @TypeConverters(MyTypeConverters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun clientDao(): ClientDao

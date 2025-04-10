@@ -59,7 +59,7 @@ class ContactsFragment : Fragment() {
         }
 
         _adapter = ContactRecViewAdapter(
-            requireContext(), {}, {}
+            {}, {}
         )
         binding.fragmentContactsRecView.adapter = adapter
         binding.fragmentContactsRecView.setHasFixedSize(true)

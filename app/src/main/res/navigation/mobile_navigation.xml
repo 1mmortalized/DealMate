@@ -16,4 +16,16 @@
         android:name="com.bizsolutions.dealmate.ui.contacts.ContactsFragment"
         android:label="@string/title_contacts"
         tools:layout="@layout/fragment_contacts" />
+
+    <fragment
+        android:id="@+id/navigation_dashboard"
+        android:name="com.bizsolutions.dealmate.ui.dashboard.DashboardFragment"
+        android:label="@string/title_dashboard"
+        tools:layout="@layout/fragment_contacts" />
+
+    <fragment
+        android:id="@+id/navigation_deals"
+        android:name="com.bizsolutions.dealmate.ui.deals.DealsFragment"
+        android:label="@string/title_deals"
+        tools:layout="@layout/fragment_contacts" />
 </navigation>
