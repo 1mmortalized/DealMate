@@ -1,6 +1,8 @@
 package com.bizsolutions.dealmate.ui.deals
 
-import android.util.Log.i
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.RelativeSizeSpan
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -75,7 +77,19 @@ class DealRecViewAdapter(
                 binding.itemDealDateTxt.text =
                     deal.date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT))
                 binding.itemDealClientTxt.text = client.name
-                binding.itemDealAmountTxt.text = "%d %s".format(deal.amount, deal.currency.uppercase())
+
+                val amount = "%d %s".format(deal.amount, deal.currency.uppercase())
+                val spannableAmount = SpannableString(amount)
+                spannableAmount.setSpan(
+                    RelativeSizeSpan(0.7f),
+                    amount.indexOf(deal.currency.uppercase()),
+                    amount.length,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+                binding.itemDealAmountTxt.text = spannableAmount
+
+                binding.itemDealDivider.alpha =
+                    if (position > 0 && getItem(position - 1) is DealListItem.Header) 1f else 0.2f
             }
         }
     }

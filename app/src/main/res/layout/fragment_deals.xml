@@ -17,6 +17,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center_horizontal"
+            android:layout_marginStart="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/fragment_deals_monthly_income_layout"
             app:layout_constraintTop_toTopOf="parent">
@@ -26,15 +27,14 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:textAppearance="?textAppearanceTitleMedium"
-                android:textColor="?colorSecondary"
-                android:text="Total income" />
+                android:textAppearance="?textAppearanceTitleSmall"
+                android:text="@string/total_income" />
 
             <TextView
+                android:id="@+id/fragment_deals_total_income_value_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?textAppearanceTitleLarge"
-                android:textColor="?colorSecondary"
+                android:textAppearance="?textAppearanceBodyLarge"
                 tools:text="20 000 USD" />
         </LinearLayout>
 
@@ -44,6 +44,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center_horizontal"
+            android:layout_marginEnd="16dp"
             app:layout_constraintStart_toEndOf="@id/fragment_deals_total_income_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -53,23 +54,25 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:textAppearance="?textAppearanceTitleMedium"
-                android:textColor="?colorTertiary"
-                android:text="This month" />
+                android:textAppearance="?textAppearanceTitleSmall"
+                android:textColor="?colorPrimary"
+                android:text="@string/this_month" />
 
             <TextView
+                android:id="@+id/fragment_deals_monthly_income_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?textAppearanceTitleLarge"
-                android:textColor="?colorTertiary"
+                android:textAppearance="?textAppearanceBodyLarge"
+                android:textColor="?colorPrimary"
                 tools:text="1 500 USD" />
         </LinearLayout>
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/fragment_books_list_front_content_card"
-            style="@style/Widget.Material3.CardView.Filled"
+            style="@style/Widget.Material3.CardView.Elevated"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            app:cardElevation="5dp"
             app:cardBackgroundColor="?colorSurfaceContainerLow"
             app:cardPreventCornerOverlap="false"
             app:shapeAppearance="@style/Theme.DealMate.DealListShape"
@@ -86,7 +89,7 @@
                 android:requiresFadingEdge="vertical"
                 android:fadingEdgeLength="25dp"
                 android:clipToPadding="false"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         </com.google.android.material.card.MaterialCardView>
@@ -97,7 +100,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:visibility="invisible"
         tools:visibility="visible"

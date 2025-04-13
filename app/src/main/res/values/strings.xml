@@ -11,4 +11,6 @@
     <string name="priority_low">Low</string>
     <string name="priority_medium">Medium</string>
     <string name="priority_high">High</string>
+    <string name="total_income">Total income</string>
+    <string name="this_month">This month</string>
 </resources>

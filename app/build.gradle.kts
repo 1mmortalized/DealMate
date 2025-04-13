@@ -65,4 +65,8 @@ dependencies {
     ksp(libs.hilt.android.compiler)
 
     implementation(libs.materialscrollbar2)
+
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.androidx.datastore.preferences)
 }
