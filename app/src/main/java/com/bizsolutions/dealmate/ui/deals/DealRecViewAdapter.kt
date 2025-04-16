@@ -12,6 +12,7 @@ import com.bizsolutions.dealmate.databinding.ItemDealBinding
 import com.bizsolutions.dealmate.databinding.ItemDealHeaderBinding
 import com.bizsolutions.dealmate.db.DealWithClient
 import com.bizsolutions.dealmate.db.EventEntity
+import java.text.DecimalFormat
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.util.Locale
@@ -78,7 +79,10 @@ class DealRecViewAdapter(
                     deal.date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT))
                 binding.itemDealClientTxt.text = client.name
 
-                val amount = "%d %s".format(deal.amount, deal.currency.uppercase())
+                val decimalFormat = DecimalFormat("#,###")
+                val formattedAmount = decimalFormat.format(deal.amount)
+
+                val amount = "%s %s".format(formattedAmount, deal.currency.uppercase())
                 val spannableAmount = SpannableString(amount)
                 spannableAmount.setSpan(
                     RelativeSizeSpan(0.7f),

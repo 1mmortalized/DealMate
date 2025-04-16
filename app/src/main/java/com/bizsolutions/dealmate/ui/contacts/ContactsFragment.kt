@@ -1,6 +1,5 @@
 package com.bizsolutions.dealmate.ui.contacts
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,8 +12,8 @@ import androidx.fragment.app.viewModels
 import androidx.transition.Transition
 import com.bizsolutions.dealmate.R
 import com.bizsolutions.dealmate.databinding.FragmentContactsBinding
+import com.bizsolutions.dealmate.ext.getThemeColor
 import com.bizsolutions.dealmate.ui.MyTransitionListener
-import com.google.android.material.color.MaterialColors
 import com.google.android.material.transition.MaterialFadeThrough
 import com.wynneplaga.materialScrollBar2.inidicators.AlphabeticIndicator
 import dagger.hilt.android.AndroidEntryPoint
@@ -73,17 +72,10 @@ class ContactsFragment : Fragment() {
     }
 
     private fun setupScrollbar() {
-        val colorSecondaryContainer: Int = MaterialColors.getColor(
-            requireContext(),
-            com.google.android.material.R.attr.colorSecondaryContainer,
-            Color.BLACK
-        )
-
-        val colorOnSecondaryContainer: Int = MaterialColors.getColor(
-            requireContext(),
-            com.google.android.material.R.attr.colorOnSecondaryContainer,
-            Color.BLACK
-        )
+        val colorSecondaryContainer: Int =
+            requireContext().getThemeColor(com.google.android.material.R.attr.colorSecondaryContainer)
+        val colorOnSecondaryContainer: Int =
+            requireContext().getThemeColor(com.google.android.material.R.attr.colorOnSecondaryContainer)
 
         binding.fragmentContactsScrollbar.indicator = AlphabeticIndicator(
             requireContext(),

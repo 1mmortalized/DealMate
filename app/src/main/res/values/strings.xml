@@ -12,5 +12,7 @@
     <string name="priority_medium">Medium</string>
     <string name="priority_high">High</string>
     <string name="total_income">Total income</string>
+    <string name="deals">Deals</string>
     <string name="this_month">This month</string>
+    <string name="chart_no_data">No data available</string>
 </resources>

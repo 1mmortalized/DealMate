@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bizsolutions.dealmate.R
+import com.bizsolutions.dealmate.ext.getThemeColor
 import com.google.android.material.card.MaterialCardView
-import com.google.android.material.color.MaterialColors
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -68,34 +68,10 @@ class CalendarAdapter(
         val weekdayTxt: TextView = view.findViewById(R.id.item_calendar_weekday_txt)
     }
 
-    private val colorPrimary: Int = MaterialColors.getColor(
-        context,
-        com.google.android.material.R.attr.colorPrimary,
-        Color.BLACK
-    )
-
-    private val colorSecondaryContainer = MaterialColors.getColor(
-        context,
-        com.google.android.material.R.attr.colorSecondaryContainer,
-        Color.BLACK
-    )
-
-    private val colorOnPrimary: Int = MaterialColors.getColor(
-        context,
-        com.google.android.material.R.attr.colorOnPrimary,
-        Color.BLACK
-    )
-
-    private val colorOnSecondaryContainer = MaterialColors.getColor(
-        context,
-        com.google.android.material.R.attr.colorOnSecondaryContainer,
-        Color.BLACK
-    )
-
-    private val colorOnSurface = MaterialColors.getColor(
-        context,
-        com.google.android.material.R.attr.colorOnSurface,
-        Color.BLACK
-    )
+    private val colorPrimary: Int = context.getThemeColor(com.google.android.material.R.attr.colorPrimary)
+    private val colorSecondaryContainer = context.getThemeColor(com.google.android.material.R.attr.colorSecondaryContainer)
+    private val colorOnPrimary: Int = context.getThemeColor(com.google.android.material.R.attr.colorOnPrimary)
+    private val colorOnSecondaryContainer = context.getThemeColor(com.google.android.material.R.attr.colorOnSecondaryContainer)
+    private val colorOnSurface = context.getThemeColor(com.google.android.material.R.attr.colorOnSurface)
 }
 
