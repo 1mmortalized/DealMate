@@ -1,6 +1,7 @@
 package com.bizsolutions.dealmate.ui.dashboard
 
 import android.R.attr.colorPrimary
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import android.util.TypedValue
@@ -12,6 +13,7 @@ import androidx.core.util.TypedValueCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bizsolutions.dealmate.R
+import com.bizsolutions.dealmate.data.currency.CurrencyManager
 import com.bizsolutions.dealmate.databinding.FragmentDashboardBinding
 import com.bizsolutions.dealmate.db.DealWithClient
 import com.bizsolutions.dealmate.ext.getThemeColor
@@ -35,8 +37,11 @@ import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.DecimalFormat
-import java.time.LocalDate
+import java.time.YearMonth
+import java.time.format.DateTimeFormatter
 import kotlin.math.max
+import kotlin.math.roundToInt
+import kotlin.text.replaceFirstChar
 
 @AndroidEntryPoint
 class DashboardFragment : Fragment() {
@@ -54,6 +59,34 @@ class DashboardFragment : Fragment() {
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
 
         viewModel.allDeals.observe(viewLifecycleOwner) { dealsList ->
+            val avgIncome = dealsList.map {
+                val currencyCode = it.deal.currency.uppercase()
+                val currencyRate = CurrencyManager.currencyRates?.get(currencyCode)?.toFloat() ?: 1f
+                it.deal.amount / currencyRate
+            }
+                .average()
+                .roundToInt()
+
+            @SuppressLint("SetTextI18n")
+            binding.fragmentDashboardAvgIncomeTxt.text = "%d USD".format(avgIncome)
+
+            val topCurrency = dealsList.groupingBy { it.deal.currency }
+                .eachCount()
+                .maxByOrNull { it.value }
+                ?.key
+
+            binding.fragmentDashboardTopCurrencyTxt.text = topCurrency
+
+            binding.fragmentDashboardTotalDealsTxt.text = "%d".format(dealsList.size)
+
+            val bestMonth = dealsList.groupBy { YearMonth.from(it.deal.date) }
+                .mapValues { entry -> entry.value.sumOf { it.deal.amount } }
+                .maxByOrNull { it.value }
+                ?.key
+
+            binding.fragmentDashboardBestMonthTxt.text =
+                bestMonth?.format(DateTimeFormatter.ofPattern("LLLL yyyy"))
+                    ?.replaceFirstChar { it.uppercase() }
 
             setupIncomeChart(dealsList)
             setupCurrencyChart(dealsList)

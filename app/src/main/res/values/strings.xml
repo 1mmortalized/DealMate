@@ -15,4 +15,10 @@
     <string name="deals">Deals</string>
     <string name="this_month">This month</string>
     <string name="chart_no_data">No data available</string>
+    <string name="stats_average_income">Average income</string>
+    <string name="stats_top_currency">Top currency</string>
+    <string name="stats_total_deals">Total deals</string>
+    <string name="stats_best_month">Best month</string>
+    <string name="stats_income_chart">Income chart</string>
+    <string name="stats_currency_distribution">Currency distribution</string>
 </resources>
