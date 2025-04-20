@@ -1,5 +1,6 @@
 package com.bizsolutions.dealmate.ui.home
 
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -7,11 +8,13 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bizsolutions.dealmate.databinding.ItemEventBinding
 import com.bizsolutions.dealmate.db.EventEntity
+import com.google.android.material.card.MaterialCardView
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 
 
 class EventRecViewAdapter(
+    private val onItemClicked: (EventEntity) -> Unit,
     private val onEditMenuItemClicked: (EventEntity) -> Unit,
     private val onDeleteMenuItemClicked: (EventEntity) -> Unit
 ) :
@@ -34,6 +37,23 @@ class EventRecViewAdapter(
         binding.itemEventTimeTxt.text = event.timeStart.format(
             DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)
         )
+
+        binding.root.setOnClickListener {
+            onItemClicked(event)
+        }
+
+        if (event.completed) {
+            binding.itemEventTitleTxt.paintFlags =
+                binding.itemEventTitleTxt.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            binding.itemEventTimeTxt.paintFlags =
+                binding.itemEventTimeTxt.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+        }
+        else {
+            binding.itemEventTitleTxt.paintFlags =
+                binding.itemEventTitleTxt.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+            binding.itemEventTimeTxt.paintFlags =
+                binding.itemEventTimeTxt.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+        }
 
 //        val popupMenu = PopupMenu(context, holder.binding.itemBookQuoteMenuBtn)
 //        popupMenu.menuInflater.inflate(R.menu.quote_item_menu, popupMenu.menu)

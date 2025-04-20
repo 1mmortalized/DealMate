@@ -21,4 +21,6 @@
     <string name="stats_best_month">Best month</string>
     <string name="stats_income_chart">Income chart</string>
     <string name="stats_currency_distribution">Currency distribution</string>
+    <string name="mark_as_completed">Complete</string>
+    <string name="mark_as_uncompleted">Uncomplete</string>
 </resources>

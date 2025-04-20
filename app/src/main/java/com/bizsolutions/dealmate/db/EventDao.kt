@@ -13,9 +13,15 @@ interface EventDao {
     @Query("SELECT * FROM events WHERE date = :date ORDER BY timeStart ASC, id DESC")
     fun getAllEventsByDate(date: LocalDate): Flow<List<EventEntity>>
 
+    @Query("SELECT * FROM events WHERE id = :id")
+    fun getEventById(id: Int): Flow<EventEntity>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertEvent(client: EventEntity)
 
     @Delete
     suspend fun deleteEvent(client: EventEntity)
+
+    @Query("UPDATE events SET completed = :completed WHERE id = :id")
+    suspend fun completeEvent(id: Int, completed: Boolean)
 }

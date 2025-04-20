@@ -1,9 +1,12 @@
 package com.bizsolutions.dealmate
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.ViewGroup.MarginLayoutParams
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
@@ -13,6 +16,8 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.bizsolutions.dealmate.databinding.ActivityMainBinding
+import com.bizsolutions.dealmate.ext.getThemeColor
+import com.bizsolutions.dealmate.ui.ToolbarMenuHandler
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -61,6 +66,17 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_home, R.id.navigation_contacts, R.id.navigation_dashboard, R.id.navigation_deals
             )
         )
+
+        binding.toolbar.setOnMenuItemClickListener { item ->
+            val navHostFragment = supportFragmentManager.findFragmentById(R.id.activity_main_nav_host_fragment)
+            val currentFragment = navHostFragment
+                ?.childFragmentManager
+                ?.fragments
+                ?.firstOrNull()
+
+            (currentFragment as? ToolbarMenuHandler)?.onToolbarMenuItemClicked(item)
+            return@setOnMenuItemClickListener true
+        }
 
         binding.toolbar.setupWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)

@@ -6,7 +6,8 @@ import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
 
 class EventRepository(private val dao: EventDao) {
-    fun allEventsByDate(date: LocalDate): Flow<List<EventEntity>> = dao.getAllEventsByDate(date)
+    fun allEventsByDate(date: LocalDate) = dao.getAllEventsByDate(date)
+    fun getEvent(id: Int) = dao.getEventById(id)
 
     suspend fun insert(event: EventEntity) {
         dao.insertEvent(event)
@@ -14,5 +15,9 @@ class EventRepository(private val dao: EventDao) {
 
     suspend fun delete(event: EventEntity) {
         dao.deleteEvent(event)
+    }
+
+    suspend fun completeEvent(id: Int, completed: Boolean) {
+        dao.completeEvent(id, completed)
     }
 }

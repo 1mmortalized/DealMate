@@ -9,7 +9,12 @@
         android:id="@+id/navigation_home"
         android:name="com.bizsolutions.dealmate.ui.home.HomeFragment"
         android:label=""
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+
+        <action
+            android:id="@+id/action_home_to_event"
+            app:destination="@id/navigation_event" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_contacts"
@@ -28,4 +33,16 @@
         android:name="com.bizsolutions.dealmate.ui.deals.DealsFragment"
         android:label="@string/title_deals"
         tools:layout="@layout/fragment_contacts" />
+
+    <fragment
+        android:id="@+id/navigation_event"
+        android:name="com.bizsolutions.dealmate.ui.task.TaskFragment"
+        android:label=""
+        tools:layout="@layout/layout_event">
+
+        <argument
+            android:name="eventId"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
 </navigation>

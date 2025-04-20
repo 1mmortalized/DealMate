@@ -23,6 +23,8 @@ class DayViewModel @Inject constructor(
     fun getTasksByDate(date: LocalDate) = taskRepository.allTasksByDate(date).asLiveData()
     fun getCallsByDate(date: LocalDate) = callRepository.allCallsByDate(date).asLiveData()
 
+    fun getEvent(id: Int) = eventRepository.getEvent(id).asLiveData()
+
     fun addEvent(title: String, timeStart: LocalTime, timeEnd: LocalTime, date: LocalDate, completed: Boolean = false) {
         viewModelScope.launch {
             eventRepository.insert(EventEntity(0, title, timeStart, timeEnd, date, completed))
@@ -32,6 +34,12 @@ class DayViewModel @Inject constructor(
     fun removeEvents(event: EventEntity) {
         viewModelScope.launch {
             eventRepository.delete(event)
+        }
+    }
+
+    fun completeEvent(id: Int, completed: Boolean = true) {
+        viewModelScope.launch {
+            eventRepository.completeEvent(id, completed)
         }
     }
 }

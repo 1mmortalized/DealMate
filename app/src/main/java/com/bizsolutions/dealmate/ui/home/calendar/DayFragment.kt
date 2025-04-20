@@ -1,11 +1,11 @@
 package com.bizsolutions.dealmate.ui.home.calendar
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.MeasureSpec
 import android.view.ViewGroup
+import androidx.core.view.isGone
 import androidx.core.view.marginBottom
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -14,12 +14,18 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bizsolutions.dealmate.R
 import com.bizsolutions.dealmate.databinding.FragmentDayBinding
+import com.bizsolutions.dealmate.databinding.LayoutEventBinding
+import com.bizsolutions.dealmate.ext.switchFadeTo
 import com.bizsolutions.dealmate.ui.home.CallRecViewAdapter
 import com.bizsolutions.dealmate.ui.home.DayViewModel
 import com.bizsolutions.dealmate.ui.home.EventRecViewAdapter
 import com.bizsolutions.dealmate.ui.home.TaskRecViewAdapter
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
+import java.time.Duration
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 
 @AndroidEntryPoint
 class DayFragment : Fragment() {
@@ -73,18 +79,46 @@ class DayFragment : Fragment() {
         getItems(date).observe(viewLifecycleOwner) { list ->
             adapter.submitList(list)
         }
-
-        @SuppressLint("ClickableViewAccessibility")
-        recyclerView.setOnTouchListener { v, event ->
-            if (recyclerView.canScrollVertically(1) || recyclerView.canScrollVertically(-1)) {
-                v.parent?.parent?.requestDisallowInterceptTouchEvent(true)
-            }
-            false
-        }
     }
 
     private fun setupEvents(date: LocalDate) {
-        _eventAdapter = EventRecViewAdapter({}, {})
+        _eventAdapter = EventRecViewAdapter(
+            { event ->
+                val bottomSheetDialog =
+                    BottomSheetDialog(requireContext())
+                val contentBinding = LayoutEventBinding.inflate(LayoutInflater.from(context)).apply {
+                    fragmentEventTitleTxt.text = event.title
+                    fragmentEventDateTxt.text = event.date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL))
+
+                    val timeStart = event.timeStart.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT))
+                    val timeEnd = event.timeEnd.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT))
+
+                    val duration = Duration.between(event.timeStart, event.timeEnd)
+                    val hours = duration.toHours()
+                    val minutes = duration.minusHours(hours).toMinutes()
+
+                    val durationText = "($hours hour${if (hours != 1L) "s" else ""} $minutes minute${if (minutes != 1L) "s" else ""})"
+                    fragmentEventTimeTxt.text = "%s - %s %s".format(timeStart, timeEnd, durationText)
+
+                    layoutEventCompleteBtn.isGone = event.completed
+                    layoutEventUncompleteBtn.isGone = !event.completed
+
+                    layoutEventCompleteBtn.setOnClickListener {
+                        viewModel.completeEvent(event.id)
+                        layoutEventCompleteBtn.switchFadeTo(layoutEventUncompleteBtn)
+                    }
+
+                    layoutEventUncompleteBtn.setOnClickListener {
+                        viewModel.completeEvent(event.id, false)
+                        layoutEventUncompleteBtn.switchFadeTo(layoutEventCompleteBtn)
+                    }
+                }
+
+                bottomSheetDialog.setContentView(contentBinding.root)
+                bottomSheetDialog.show()
+            },
+            {},
+            {})
         setupRecyclerView(
             binding.fragmentDayEventsRecView,
             R.layout.item_event,
