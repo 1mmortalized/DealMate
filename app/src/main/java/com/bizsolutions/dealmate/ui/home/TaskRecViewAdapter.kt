@@ -7,10 +7,12 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bizsolutions.dealmate.R
 import com.bizsolutions.dealmate.databinding.ItemTaskBinding
+import com.bizsolutions.dealmate.db.EventEntity
 import com.bizsolutions.dealmate.db.TaskWithClient
 
 
 class TaskRecViewAdapter(
+    private val onItemClicked: (TaskWithClient) -> Unit,
     private val onEditMenuItemClicked: (TaskWithClient) -> Unit,
     private val onDeleteMenuItemClicked: (TaskWithClient) -> Unit
 ) :
@@ -39,6 +41,10 @@ class TaskRecViewAdapter(
             }
         )
         binding.itemTaskCheckbox.isChecked = task.task.completed
+
+        binding.root.setOnClickListener {
+            onItemClicked(task)
+        }
 
 //        val popupMenu = PopupMenu(context, holder.binding.itemBookQuoteMenuBtn)
 //        popupMenu.menuInflater.inflate(R.menu.quote_item_menu, popupMenu.menu)

@@ -16,9 +16,10 @@ import java.time.LocalTime
     EventEntity::class,
     CallEntity::class,
     DealEntity::class],
-    version = 2, exportSchema = true,
+    version = 3, exportSchema = true,
     autoMigrations = [
         AutoMigration(from = 1, to = 2),
+        AutoMigration(from = 2, to = 3),
     ])
 @TypeConverters(MyTypeConverters::class)
 abstract class AppDatabase : RoomDatabase() {

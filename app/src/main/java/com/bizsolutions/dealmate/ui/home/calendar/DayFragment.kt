@@ -10,15 +10,18 @@ import androidx.core.view.marginBottom
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bizsolutions.dealmate.R
 import com.bizsolutions.dealmate.databinding.FragmentDayBinding
 import com.bizsolutions.dealmate.databinding.LayoutEventBinding
+import com.bizsolutions.dealmate.ext.safeNavigate
 import com.bizsolutions.dealmate.ext.switchFadeTo
 import com.bizsolutions.dealmate.ui.home.CallRecViewAdapter
 import com.bizsolutions.dealmate.ui.home.DayViewModel
 import com.bizsolutions.dealmate.ui.home.EventRecViewAdapter
+import com.bizsolutions.dealmate.ui.home.HomeFragmentDirections
 import com.bizsolutions.dealmate.ui.home.TaskRecViewAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
@@ -129,7 +132,13 @@ class DayFragment : Fragment() {
     }
 
     private fun setupTasks(date: LocalDate) {
-        _taskAdapter = TaskRecViewAdapter({}, {})
+        _taskAdapter = TaskRecViewAdapter(
+            { task ->
+                val directions = HomeFragmentDirections.actionHomeToTask(task.task.id)
+                findNavController().safeNavigate(directions)
+            },
+            {},
+            {})
         setupRecyclerView(
             binding.fragmentDayTasksRecView,
             R.layout.item_task,

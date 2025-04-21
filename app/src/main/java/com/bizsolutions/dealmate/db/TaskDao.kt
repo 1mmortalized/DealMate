@@ -15,9 +15,15 @@ interface TaskDao {
     @Query("SELECT * FROM tasks WHERE date = :date ORDER BY priority ASC, id DESC")
     fun getAllTasksByDate(date: LocalDate): Flow<List<TaskWithClient>>
 
+    @Query("SELECT * FROM tasks WHERE id = :id")
+    fun getTaskById(id: Int): Flow<TaskWithClient>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTask(task: TaskEntity)
 
     @Delete
     suspend fun deleteTask(task: TaskEntity)
+
+    @Query("UPDATE tasks SET progress = :progress WHERE id = :id")
+    suspend fun updateProgress(id: Int, progress: Int)
 }

@@ -31,7 +31,7 @@
         android:background="?colorSecondaryContainer"
         app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full"
         android:tint="?colorOnSecondaryContainer"
-        android:src="@drawable/ic_money_sign" />
+        android:src="@drawable/ic_money_sign_scaled" />
 
     <TextView
         android:id="@+id/item_deal_title_txt"

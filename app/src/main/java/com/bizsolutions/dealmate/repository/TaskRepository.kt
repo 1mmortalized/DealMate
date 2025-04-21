@@ -8,6 +8,7 @@ import java.time.LocalDate
 
 class TaskRepository(private val dao: TaskDao) {
     fun allTasksByDate(date: LocalDate): Flow<List<TaskWithClient>> = dao.getAllTasksByDate(date)
+    fun getTask(id: Int) = dao.getTaskById(id)
 
     suspend fun insert(task: TaskEntity) {
         dao.insertTask(task)
@@ -15,5 +16,9 @@ class TaskRepository(private val dao: TaskDao) {
 
     suspend fun delete(task: TaskEntity) {
         dao.deleteTask(task)
+    }
+
+    suspend fun updateProgress(id: Int, progress: Int) {
+        dao.updateProgress(id, progress)
     }
 }

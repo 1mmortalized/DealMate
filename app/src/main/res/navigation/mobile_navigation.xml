@@ -12,8 +12,8 @@
         tools:layout="@layout/fragment_home">
 
         <action
-            android:id="@+id/action_home_to_event"
-            app:destination="@id/navigation_event" />
+            android:id="@+id/action_home_to_task"
+            app:destination="@id/navigation_task" />
     </fragment>
 
     <fragment
@@ -35,13 +35,13 @@
         tools:layout="@layout/fragment_contacts" />
 
     <fragment
-        android:id="@+id/navigation_event"
+        android:id="@+id/navigation_task"
         android:name="com.bizsolutions.dealmate.ui.task.TaskFragment"
         android:label=""
-        tools:layout="@layout/layout_event">
+        tools:layout="@layout/fragment_task">
 
         <argument
-            android:name="eventId"
+            android:name="taskId"
             app:argType="integer"
             android:defaultValue="0" />
     </fragment>

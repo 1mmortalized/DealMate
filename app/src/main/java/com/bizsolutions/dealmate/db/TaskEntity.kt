@@ -1,5 +1,6 @@
 package com.bizsolutions.dealmate.db
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
@@ -20,6 +21,8 @@ data class TaskEntity(
     val title: String,
     val date: LocalDate,
     val priority: Int,
+    @ColumnInfo(defaultValue = "") val description: String,
+    @ColumnInfo(defaultValue = "0") val progress: Int,
     val clientId: Int,
     val completed: Boolean
 )
