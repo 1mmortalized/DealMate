@@ -1,6 +1,7 @@
 package com.bizsolutions.dealmate.ui.home.calendar
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.MeasureSpec
@@ -136,6 +137,13 @@ class DayFragment : Fragment() {
             { task ->
                 val directions = HomeFragmentDirections.actionHomeToTask(task.task.id)
                 findNavController().safeNavigate(directions)
+            },
+            { task, isChecked ->
+                viewModel.updateTaskProgress(
+                    task.task.id,
+                    if (isChecked) 100 else 0
+                )
+                Log.d("DB DEBUG", "Task id:${task.task.id} isChecked:$isChecked")
             },
             {},
             {})

@@ -15,6 +15,7 @@ interface TaskDao {
     @Query("SELECT * FROM tasks WHERE date = :date ORDER BY priority ASC, id DESC")
     fun getAllTasksByDate(date: LocalDate): Flow<List<TaskWithClient>>
 
+    @Transaction
     @Query("SELECT * FROM tasks WHERE id = :id")
     fun getTaskById(id: Int): Flow<TaskWithClient>
 

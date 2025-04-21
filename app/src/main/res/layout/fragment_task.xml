@@ -29,11 +29,15 @@
             android:id="@+id/fragment_task_priority_chip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            tools:chipIcon="@drawable/ic_stat_2"
+            app:chipIconTint="?colorOnSecondaryContainer"
             app:chipStrokeWidth="0dp"
             app:chipBackgroundColor="?colorSecondaryContainer"
             tools:text="Medium"
             app:chipMinTouchTargetSize="32dp"
-            android:layout_marginTop="4dp" />
+            android:layout_marginTop="8dp"
+            android:clickable="false"
+            android:focusable="false" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

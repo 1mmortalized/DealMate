@@ -40,6 +40,10 @@ class TaskFragment : Fragment(), ToolbarMenuHandler {
         val colorSecondaryContainer = requireContext().getThemeColor(com.google.android.material.R.attr.colorSecondaryContainer)
         val colorTertiaryContainer = requireContext().getThemeColor(com.google.android.material.R.attr.colorTertiaryContainer)
 
+        val colorOnPrimaryContainer = requireContext().getThemeColor(com.google.android.material.R.attr.colorOnPrimaryContainer)
+        val colorOnSecondaryContainer = requireContext().getThemeColor(com.google.android.material.R.attr.colorOnSecondaryContainer)
+        val colorOnTertiaryContainer = requireContext().getThemeColor(com.google.android.material.R.attr.colorOnTertiaryContainer)
+
         viewModel.getTask(args.taskId).observeOnce(viewLifecycleOwner) { taskWithClient ->
             val task = taskWithClient.task
             val client = taskWithClient.client
@@ -51,14 +55,26 @@ class TaskFragment : Fragment(), ToolbarMenuHandler {
                     1 -> {
                         setText(R.string.priority_high)
                         chipBackgroundColor = ColorStateList.valueOf(colorPrimaryContainer)
+                        setChipIconResource(R.drawable.ic_stat_3)
+
+                        setTextColor(colorOnPrimaryContainer)
+                        chipIconTint = ColorStateList.valueOf(colorOnPrimaryContainer)
                     }
                     2 -> {
                         setText(R.string.priority_medium)
                         chipBackgroundColor = ColorStateList.valueOf(colorSecondaryContainer)
+                        setChipIconResource(R.drawable.ic_stat_2)
+
+                        setTextColor(colorOnSecondaryContainer)
+                        chipIconTint = ColorStateList.valueOf(colorOnSecondaryContainer)
                     }
                     else -> {
-                        setText(R.string.priority_medium)
+                        setText(R.string.priority_low)
                         chipBackgroundColor = ColorStateList.valueOf(colorTertiaryContainer)
+                        setChipIconResource(R.drawable.ic_stat_1)
+
+                        setTextColor(colorOnTertiaryContainer)
+                        chipIconTint = ColorStateList.valueOf(colorOnTertiaryContainer)
                     }
                 }
             }

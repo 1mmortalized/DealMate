@@ -3,10 +3,12 @@ package com.bizsolutions.dealmate.db
 import android.content.Context
 import androidx.room.AutoMigration
 import androidx.room.Database
+import androidx.room.DeleteColumn
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
+import androidx.room.migration.AutoMigrationSpec
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -16,10 +18,11 @@ import java.time.LocalTime
     EventEntity::class,
     CallEntity::class,
     DealEntity::class],
-    version = 3, exportSchema = true,
+    version = 4, exportSchema = true,
     autoMigrations = [
         AutoMigration(from = 1, to = 2),
         AutoMigration(from = 2, to = 3),
+        AutoMigration(from = 3, to = 4, DeleteOldColumn::class),
     ])
 @TypeConverters(MyTypeConverters::class)
 abstract class AppDatabase : RoomDatabase() {
@@ -68,3 +71,9 @@ private class MyTypeConverters {
         return time?.toSecondOfDay()
     }
 }
+
+@DeleteColumn(
+    tableName = "tasks",
+    columnName = "completed"
+)
+private class DeleteOldColumn: AutoMigrationSpec

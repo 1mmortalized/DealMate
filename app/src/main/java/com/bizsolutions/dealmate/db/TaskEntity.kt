@@ -6,7 +6,6 @@ import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import java.time.LocalDate
-import java.util.Date
 
 @Entity(
     tableName = "tasks",
@@ -23,6 +22,5 @@ data class TaskEntity(
     val priority: Int,
     @ColumnInfo(defaultValue = "") val description: String,
     @ColumnInfo(defaultValue = "0") val progress: Int,
-    val clientId: Int,
-    val completed: Boolean
+    val clientId: Int
 )

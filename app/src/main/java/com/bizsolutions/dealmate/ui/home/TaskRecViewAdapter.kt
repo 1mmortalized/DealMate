@@ -7,12 +7,13 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bizsolutions.dealmate.R
 import com.bizsolutions.dealmate.databinding.ItemTaskBinding
-import com.bizsolutions.dealmate.db.EventEntity
 import com.bizsolutions.dealmate.db.TaskWithClient
+import com.google.android.material.checkbox.MaterialCheckBox
 
 
 class TaskRecViewAdapter(
     private val onItemClicked: (TaskWithClient) -> Unit,
+    private val onItemCheckedStateChanged: (TaskWithClient, Boolean) -> Unit,
     private val onEditMenuItemClicked: (TaskWithClient) -> Unit,
     private val onDeleteMenuItemClicked: (TaskWithClient) -> Unit
 ) :
@@ -40,41 +41,30 @@ class TaskRecViewAdapter(
                 else -> R.string.priority_low
             }
         )
-        binding.itemTaskCheckbox.isChecked = task.task.completed
+
+        binding.itemTaskPriorityIcon.setImageResource(
+            when(task.task.priority) {
+                1 -> R.drawable.ic_stat_3_20
+                2 -> R.drawable.ic_stat_2_20
+                else -> R.drawable.ic_stat_1_20
+            }
+        )
+
+        binding.itemTaskCheckbox.setOnCheckedChangeListener(null)
+        binding.itemTaskCheckbox.checkedState =
+            when (task.task.progress) {
+                0 -> MaterialCheckBox.STATE_UNCHECKED
+                100 -> MaterialCheckBox.STATE_CHECKED
+                else -> MaterialCheckBox.STATE_INDETERMINATE
+            }
+
+        binding.itemTaskCheckbox.setOnCheckedChangeListener { _, isChecked ->
+            onItemCheckedStateChanged(task, isChecked)
+        }
 
         binding.root.setOnClickListener {
             onItemClicked(task)
         }
-
-//        val popupMenu = PopupMenu(context, holder.binding.itemBookQuoteMenuBtn)
-//        popupMenu.menuInflater.inflate(R.menu.quote_item_menu, popupMenu.menu)
-//        popupMenu.setupOptionalIcons(context)
-//
-//        popupMenu.setOnMenuItemClickListener { menuItem ->
-//            when (menuItem.itemId) {
-//                R.id.quote_item_menu_item_edit -> onEditMenuItemClicked(quote)
-//                R.id.quote_item_menu_item_copy -> {
-//                    val clipboard: ClipboardManager? =
-//                        context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
-//
-//                    clipboard?.let {
-//                        val clip = ClipData.newPlainText("quote_text_clip", quote.text)
-//                        clipboard.setPrimaryClip(clip)
-//                    }
-//                }
-//
-//                R.id.quote_item_menu_item_select_text -> onSelectTextMenuItemClicked(quote.text)
-//                R.id.quote_item_menu_item_delete -> onDeleteMenuItemClicked(quote)
-//            }
-//
-//            true
-//        }
-//
-//        holder.binding.itemBookQuoteMenuBtn.setOnClickListener {
-//            popupMenu.show()
-//        }
-
-
     }
 
 

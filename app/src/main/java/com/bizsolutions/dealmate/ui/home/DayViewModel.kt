@@ -42,4 +42,10 @@ class DayViewModel @Inject constructor(
             eventRepository.completeEvent(id, completed)
         }
     }
+
+    fun updateTaskProgress(id: Int, progress: Int) {
+        viewModelScope.launch {
+            taskRepository.updateProgress(id, progress)
+        }
+    }
 }

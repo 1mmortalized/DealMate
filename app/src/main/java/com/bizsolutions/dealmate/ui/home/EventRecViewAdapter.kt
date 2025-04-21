@@ -54,36 +54,6 @@ class EventRecViewAdapter(
             binding.itemEventTimeTxt.paintFlags =
                 binding.itemEventTimeTxt.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
         }
-
-//        val popupMenu = PopupMenu(context, holder.binding.itemBookQuoteMenuBtn)
-//        popupMenu.menuInflater.inflate(R.menu.quote_item_menu, popupMenu.menu)
-//        popupMenu.setupOptionalIcons(context)
-//
-//        popupMenu.setOnMenuItemClickListener { menuItem ->
-//            when (menuItem.itemId) {
-//                R.id.quote_item_menu_item_edit -> onEditMenuItemClicked(quote)
-//                R.id.quote_item_menu_item_copy -> {
-//                    val clipboard: ClipboardManager? =
-//                        context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
-//
-//                    clipboard?.let {
-//                        val clip = ClipData.newPlainText("quote_text_clip", quote.text)
-//                        clipboard.setPrimaryClip(clip)
-//                    }
-//                }
-//
-//                R.id.quote_item_menu_item_select_text -> onSelectTextMenuItemClicked(quote.text)
-//                R.id.quote_item_menu_item_delete -> onDeleteMenuItemClicked(quote)
-//            }
-//
-//            true
-//        }
-//
-//        holder.binding.itemBookQuoteMenuBtn.setOnClickListener {
-//            popupMenu.show()
-//        }
-
-
     }
 
 
