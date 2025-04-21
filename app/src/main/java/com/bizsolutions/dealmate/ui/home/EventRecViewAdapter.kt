@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bizsolutions.dealmate.databinding.ItemEventBinding
 import com.bizsolutions.dealmate.db.EventEntity
-import com.google.android.material.card.MaterialCardView
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 

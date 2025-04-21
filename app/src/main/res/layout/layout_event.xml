@@ -104,6 +104,13 @@
             app:iconGravity="textStart" />
 
         <Button
+            android:id="@+id/layout_event_edit_btn"
+            style="@style/Widget.Material3.Button.IconButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/ic_edit" />
+
+        <Button
             android:id="@+id/layout_event_delete_btn"
             style="@style/Widget.Material3.Button.IconButton"
             android:layout_width="wrap_content"

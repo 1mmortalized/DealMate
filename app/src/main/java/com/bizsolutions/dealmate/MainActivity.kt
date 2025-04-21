@@ -1,12 +1,9 @@
 package com.bizsolutions.dealmate
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import android.view.ViewGroup.MarginLayoutParams
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
@@ -16,7 +13,6 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.bizsolutions.dealmate.databinding.ActivityMainBinding
-import com.bizsolutions.dealmate.ext.getThemeColor
 import com.bizsolutions.dealmate.ui.ToolbarMenuHandler
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
@@ -58,6 +54,15 @@ class MainActivity : AppCompatActivity() {
 
             addOnDestinationChangedListener { _, destination, _ ->
                 binding.homeAppTitleLayout.isVisible = destination.id == R.id.navigation_home
+
+                if (destination.id !in listOf(
+                    R.id.navigation_task
+                )) {
+                    binding.toolbar.menu.clear()
+                } else {
+                    binding.toolbar.menu.clear()
+                    binding.toolbar.inflateMenu(R.menu.item_menu)
+                }
             }
         }
 
