@@ -14,7 +14,7 @@ import java.time.LocalTime
 import javax.inject.Inject
 
 @HiltViewModel
-class DayViewModel @Inject constructor(
+class HomeViewModel @Inject constructor(
     val eventRepository: EventRepository,
     val taskRepository: TaskRepository,
     val callRepository: CallRepository
@@ -25,9 +25,9 @@ class DayViewModel @Inject constructor(
 
     fun getEvent(id: Int) = eventRepository.getEvent(id).asLiveData()
 
-    fun addEvent(title: String, timeStart: LocalTime, timeEnd: LocalTime, date: LocalDate, completed: Boolean = false) {
+    fun addEvent(event: EventEntity) {
         viewModelScope.launch {
-            eventRepository.insert(EventEntity(0, title, timeStart, timeEnd, date, completed))
+            eventRepository.insert(event)
         }
     }
 

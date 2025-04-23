@@ -1,6 +1,7 @@
 package com.bizsolutions.dealmate.db
 
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import java.time.LocalDate
 import java.time.LocalTime
@@ -13,4 +14,7 @@ data class EventEntity(
     val timeEnd: LocalTime,
     val date: LocalDate,
     val completed: Boolean
-)
+) {
+    @Ignore
+    constructor(): this(0, "", LocalTime.now(), LocalTime.now(), LocalDate.now(), false)
+}

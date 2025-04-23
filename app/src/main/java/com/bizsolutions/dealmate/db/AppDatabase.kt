@@ -50,7 +50,7 @@ abstract class AppDatabase : RoomDatabase() {
     }
 }
 
-private class MyTypeConverters {
+class MyTypeConverters {
     @TypeConverter
     fun localDateFromTimestamp(value: Long?): LocalDate? {
         return value?.let { LocalDate.ofEpochDay(value) }
@@ -76,4 +76,4 @@ private class MyTypeConverters {
     tableName = "tasks",
     columnName = "completed"
 )
-private class DeleteOldColumn: AutoMigrationSpec
+class DeleteOldColumn: AutoMigrationSpec

@@ -20,7 +20,7 @@ import com.bizsolutions.dealmate.databinding.LayoutEventBinding
 import com.bizsolutions.dealmate.ext.safeNavigate
 import com.bizsolutions.dealmate.ext.switchFadeTo
 import com.bizsolutions.dealmate.ui.home.CallRecViewAdapter
-import com.bizsolutions.dealmate.ui.home.DayViewModel
+import com.bizsolutions.dealmate.ui.home.HomeViewModel
 import com.bizsolutions.dealmate.ui.home.EventRecViewAdapter
 import com.bizsolutions.dealmate.ui.home.HomeFragmentDirections
 import com.bizsolutions.dealmate.ui.home.TaskRecViewAdapter
@@ -45,7 +45,7 @@ class DayFragment : Fragment() {
     private var _callAdapter: CallRecViewAdapter? = null
     private val callAdapter get() = _callAdapter!!
 
-    private val viewModel: DayViewModel by viewModels()
+    private val viewModel: HomeViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentDayBinding.inflate(inflater, container, false)
@@ -56,6 +56,11 @@ class DayFragment : Fragment() {
         setupEvents(date)
         setupTasks(date)
         setupCalls(date)
+
+        binding.fragmentDayAddEventBtn.setOnClickListener {
+            val directions = HomeFragmentDirections.actionHomeToAddEvent()
+            findNavController().safeNavigate(directions)
+        }
 
         return binding.root
     }

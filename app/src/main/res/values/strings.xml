@@ -27,4 +27,12 @@
     <string name="client">Client</string>
     <string name="progress">Progress</string>
     <string name="description">Description</string>
+    <string name="dlg_save">Save</string>
+    <string name="title_hint">Title</string>
+    <string name="date_hint">Date</string>
+    <string name="end_time_hint">End time</string>
+    <string name="start_time_hint">Start time</string>
+    <string name="add_event_dialog_title">Add event</string>
+    <string name="edit_event_dialog_title">Edit event</string>
+    <string name="event_saved_snack">Event saved</string>
 </resources>
