@@ -3,6 +3,7 @@ package com.bizsolutions.dealmate.db
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Ignore
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import java.time.LocalDate
@@ -17,10 +18,13 @@ import java.time.LocalDate
 )
 data class TaskEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    val title: String,
-    val date: LocalDate,
-    val priority: Int,
-    @ColumnInfo(defaultValue = "") val description: String,
+    var title: String,
+    var date: LocalDate,
+    var priority: Int,
+    @ColumnInfo(defaultValue = "") var description: String,
     @ColumnInfo(defaultValue = "0") val progress: Int,
-    val clientId: Int
-)
+    var clientId: Int
+) {
+    @Ignore
+    constructor(): this(0, "", LocalDate.now(), 3, "", 0, 0)
+}

@@ -8,9 +8,6 @@
     <string name="events_section_title">Events</string>
     <string name="tasks_section_title">Tasks</string>
     <string name="calls_section_title">Calls</string>
-    <string name="priority_low">Low</string>
-    <string name="priority_medium">Medium</string>
-    <string name="priority_high">High</string>
     <string name="total_income">Total income</string>
     <string name="deals">Deals</string>
     <string name="this_month">This month</string>
@@ -32,7 +29,27 @@
     <string name="date_hint">Date</string>
     <string name="end_time_hint">End time</string>
     <string name="start_time_hint">Start time</string>
+
     <string name="add_event_dialog_title">Add event</string>
     <string name="edit_event_dialog_title">Edit event</string>
     <string name="event_saved_snack">Event saved</string>
+
+    <string name="priority_hint">Priority</string>
+    <string name="client_hint">Client</string>
+    <string name="description_hint">Description</string>
+
+    <string name="add_task_dialog_title">Add task</string>
+    <string name="edit_task_dialog_title">Edit task</string>
+    <string name="task_saved_snack">Task saved</string>
+
+    <string-array name="priority_dropdown_content">
+        <item>Low</item>
+        <item>Medium</item>
+        <item>High</item>
+    </string-array>
+    <string name="priority_low">Low</string>
+    <string name="priority_medium">Medium</string>
+    <string name="priority_high">High</string>
+
+
 </resources>

@@ -62,6 +62,11 @@ class DayFragment : Fragment() {
             findNavController().safeNavigate(directions)
         }
 
+        binding.fragmentDayAddTaskBtn.setOnClickListener {
+            val directions = HomeFragmentDirections.actionHomeToAddTask()
+            findNavController().safeNavigate(directions)
+        }
+
         return binding.root
     }
 

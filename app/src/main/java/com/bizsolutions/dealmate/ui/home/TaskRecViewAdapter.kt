@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bizsolutions.dealmate.R
 import com.bizsolutions.dealmate.databinding.ItemTaskBinding
 import com.bizsolutions.dealmate.db.TaskWithClient
+import com.bizsolutions.dealmate.ui.task.TaskPriority
 import com.google.android.material.checkbox.MaterialCheckBox
 
 
@@ -34,18 +35,14 @@ class TaskRecViewAdapter(
 
         binding.itemTaskTitleTxt.text = task.task.title
         binding.itemTaskClientTxt.text = task.client.name
-        binding.itemTaskPriorityTxt.setText(
-            when(task.task.priority) {
-                1 -> R.string.priority_high
-                2 -> R.string.priority_medium
-                else -> R.string.priority_low
-            }
-        )
+
+        val priority = TaskPriority.fromValue(task.task.priority)
+        binding.itemTaskPriorityTxt.setText(priority.labelResId)
 
         binding.itemTaskPriorityIcon.setImageResource(
-            when(task.task.priority) {
-                1 -> R.drawable.ic_stat_3_20
-                2 -> R.drawable.ic_stat_2_20
+            when(TaskPriority.fromValue(task.task.priority)) {
+                TaskPriority.HIGH -> R.drawable.ic_stat_3_20
+                TaskPriority.MEDIUM -> R.drawable.ic_stat_2_20
                 else -> R.drawable.ic_stat_1_20
             }
         )

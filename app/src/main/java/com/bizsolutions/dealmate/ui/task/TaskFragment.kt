@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -36,47 +37,25 @@ class TaskFragment : Fragment(), ToolbarMenuHandler {
     ): View {
         _binding = FragmentTaskBinding.inflate(inflater, container, false)
 
-        val colorPrimaryContainer = requireContext().getThemeColor(com.google.android.material.R.attr.colorPrimaryContainer)
-        val colorSecondaryContainer = requireContext().getThemeColor(com.google.android.material.R.attr.colorSecondaryContainer)
-        val colorTertiaryContainer = requireContext().getThemeColor(com.google.android.material.R.attr.colorTertiaryContainer)
-
-        val colorOnPrimaryContainer = requireContext().getThemeColor(com.google.android.material.R.attr.colorOnPrimaryContainer)
-        val colorOnSecondaryContainer = requireContext().getThemeColor(com.google.android.material.R.attr.colorOnSecondaryContainer)
-        val colorOnTertiaryContainer = requireContext().getThemeColor(com.google.android.material.R.attr.colorOnTertiaryContainer)
-
         viewModel.getTask(args.taskId).observeOnce(viewLifecycleOwner) { taskWithClient ->
             val task = taskWithClient.task
             val client = taskWithClient.client
 
             binding.fragmentTaskTitleTxt.text = task.title
 
+            val priority = TaskPriority.fromValue(task.priority)
+
             binding.fragmentTaskPriorityChip.apply {
-                when(task.priority) {
-                    1 -> {
-                        setText(R.string.priority_high)
-                        chipBackgroundColor = ColorStateList.valueOf(colorPrimaryContainer)
-                        setChipIconResource(R.drawable.ic_stat_3)
+                val containerColor = requireContext().getThemeColor(priority.containerColor)
+                val onContainerColor = requireContext().getThemeColor(priority.onContainerColor)
 
-                        setTextColor(colorOnPrimaryContainer)
-                        chipIconTint = ColorStateList.valueOf(colorOnPrimaryContainer)
-                    }
-                    2 -> {
-                        setText(R.string.priority_medium)
-                        chipBackgroundColor = ColorStateList.valueOf(colorSecondaryContainer)
-                        setChipIconResource(R.drawable.ic_stat_2)
+                setText(priority.labelResId)
+                setChipIconResource(priority.iconResId)
 
-                        setTextColor(colorOnSecondaryContainer)
-                        chipIconTint = ColorStateList.valueOf(colorOnSecondaryContainer)
-                    }
-                    else -> {
-                        setText(R.string.priority_low)
-                        chipBackgroundColor = ColorStateList.valueOf(colorTertiaryContainer)
-                        setChipIconResource(R.drawable.ic_stat_1)
+                chipBackgroundColor = ColorStateList.valueOf(containerColor)
 
-                        setTextColor(colorOnTertiaryContainer)
-                        chipIconTint = ColorStateList.valueOf(colorOnTertiaryContainer)
-                    }
-                }
+                setTextColor(onContainerColor)
+                chipIconTint = ColorStateList.valueOf(onContainerColor)
             }
 
             binding.fragmentTaskDateTxt.text = task.date.format(DateTimeFormatter.ofLocalizedDate(

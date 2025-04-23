@@ -22,6 +22,14 @@
         <action
             android:id="@+id/action_home_to_edit_event"
             app:destination="@id/navigation_edit_event" />
+
+        <action
+            android:id="@+id/action_home_to_add_task"
+            app:destination="@id/navigation_add_task" />
+
+        <action
+            android:id="@+id/action_home_to_edit_task"
+            app:destination="@id/navigation_edit_task" />
     </fragment>
 
     <fragment
@@ -68,6 +76,24 @@
 
         <argument
             android:name="eventId"
+            android:defaultValue="0"
+            app:argType="integer" />
+    </dialog>
+
+    <dialog
+        android:id="@+id/navigation_add_task"
+        android:name="com.bizsolutions.dealmate.ui.home.AddTaskDialogFragment"
+        android:label="Add task"
+        tools:layout="@layout/fragment_dialog_add_task" />
+
+    <dialog
+        android:id="@+id/navigation_edit_task"
+        android:name="com.bizsolutions.dealmate.ui.home.EditTaskDialogFragment"
+        android:label="Edit task"
+        tools:layout="@layout/fragment_dialog_add_task">
+
+        <argument
+            android:name="taskId"
             android:defaultValue="0"
             app:argType="integer" />
     </dialog>

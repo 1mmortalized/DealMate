@@ -12,6 +12,7 @@ import com.bizsolutions.dealmate.databinding.FragmentDialogAddEventBinding
 import com.bizsolutions.dealmate.databinding.FragmentDialogBaseBinding
 import com.bizsolutions.dealmate.db.EventEntity
 import com.bizsolutions.dealmate.ui.FullscreenDialogFragment
+import com.bizsolutions.dealmate.utils.showDatePicker
 import com.bizsolutions.dealmate.utils.showTimePicker
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
@@ -92,25 +93,16 @@ open class AddEventDialogFragment : FullscreenDialogFragment() {
         }
 
         binding.fdAddEventDateEdt.editText!!.setOnClickListener {
-            val materialDatePicker = MaterialDatePicker.Builder.datePicker()
-                .setSelection(
-                    pickedDate?.atStartOfDay(ZoneId.systemDefault())?.toInstant()?.toEpochMilli()
-                        ?: MaterialDatePicker.todayInUtcMilliseconds()
-                )
-                .build()
-
-            materialDatePicker.addOnPositiveButtonClickListener { selection ->
-                val calendar = Calendar.getInstance()
-                calendar.timeInMillis = materialDatePicker.selection!!
-
-                pickedDate =
-                    Instant.ofEpochMilli(selection).atZone(ZoneId.systemDefault()).toLocalDate()
-
+            showDatePicker(
+                pickedDate,
+                parentFragmentManager,
+                "DATE_PICKER_TAG"
+            ) { date ->
+                pickedDate = date
                 binding.fdAddEventDateEdt.editText!!.setText(
-                    pickedDate!!.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM))
+                    date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM))
                 )
             }
-            materialDatePicker.show(parentFragmentManager, "DATE_PICKER_TAG")
         }
 
         binding.fdAddEventTimeStartEdt.editText!!.setOnClickListener {
