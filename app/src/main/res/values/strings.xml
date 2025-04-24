@@ -29,6 +29,7 @@
     <string name="date_hint">Date</string>
     <string name="end_time_hint">End time</string>
     <string name="start_time_hint">Start time</string>
+    <string name="time_hint">Time</string>
 
     <string name="add_event_dialog_title">Add event</string>
     <string name="edit_event_dialog_title">Edit event</string>
@@ -41,6 +42,10 @@
     <string name="add_task_dialog_title">Add task</string>
     <string name="edit_task_dialog_title">Edit task</string>
     <string name="task_saved_snack">Task saved</string>
+
+    <string name="add_call_dialog_title">Add call</string>
+    <string name="edit_call_dialog_title">Edit call</string>
+    <string name="call_saved_snack">Call saved</string>
 
     <string-array name="priority_dropdown_content">
         <item>Low</item>

@@ -30,6 +30,14 @@
         <action
             android:id="@+id/action_home_to_edit_task"
             app:destination="@id/navigation_edit_task" />
+
+        <action
+            android:id="@+id/action_home_to_add_call"
+            app:destination="@id/navigation_add_call" />
+
+        <action
+            android:id="@+id/action_home_to_edit_call"
+            app:destination="@id/navigation_edit_call" />
     </fragment>
 
     <fragment
@@ -91,6 +99,24 @@
         android:name="com.bizsolutions.dealmate.ui.home.EditTaskDialogFragment"
         android:label="Edit task"
         tools:layout="@layout/fragment_dialog_add_task">
+
+        <argument
+            android:name="taskId"
+            android:defaultValue="0"
+            app:argType="integer" />
+    </dialog>
+
+    <dialog
+        android:id="@+id/navigation_add_call"
+        android:name="com.bizsolutions.dealmate.ui.home.AddCallDialogFragment"
+        android:label="Add call"
+        tools:layout="@layout/fragment_dialog_add_call" />
+
+    <dialog
+        android:id="@+id/navigation_edit_call"
+        android:name="com.bizsolutions.dealmate.ui.home.EditCallDialogFragment"
+        android:label="Edit call"
+        tools:layout="@layout/fragment_dialog_add_call">
 
         <argument
             android:name="taskId"

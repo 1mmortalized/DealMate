@@ -3,7 +3,7 @@ package com.bizsolutions.dealmate.ui.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.bizsolutions.dealmate.db.ClientEntity
+import com.bizsolutions.dealmate.db.CallEntity
 import com.bizsolutions.dealmate.db.EventEntity
 import com.bizsolutions.dealmate.db.TaskEntity
 import com.bizsolutions.dealmate.repository.CallRepository
@@ -11,10 +11,8 @@ import com.bizsolutions.dealmate.repository.ClientRepository
 import com.bizsolutions.dealmate.repository.EventRepository
 import com.bizsolutions.dealmate.repository.TaskRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-import java.time.LocalTime
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,7 +20,7 @@ class HomeViewModel @Inject constructor(
     val eventRepository: EventRepository,
     val taskRepository: TaskRepository,
     val callRepository: CallRepository,
-    val clientRepository: ClientRepository
+    clientRepository: ClientRepository
 ) : ViewModel() {
     fun getEventsByDate(date: LocalDate) = eventRepository.allEventsByDate(date).asLiveData()
     fun getTasksByDate(date: LocalDate) = taskRepository.allTasksByDate(date).asLiveData()
@@ -57,6 +55,12 @@ class HomeViewModel @Inject constructor(
     fun updateTaskProgress(id: Int, progress: Int) {
         viewModelScope.launch {
             taskRepository.updateProgress(id, progress)
+        }
+    }
+
+    fun addCall(call: CallEntity) {
+        viewModelScope.launch {
+            callRepository.insert(call)
         }
     }
 
