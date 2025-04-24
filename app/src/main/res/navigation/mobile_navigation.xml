@@ -44,7 +44,16 @@
         android:id="@+id/navigation_contacts"
         android:name="com.bizsolutions.dealmate.ui.contacts.ContactsFragment"
         android:label="@string/title_contacts"
-        tools:layout="@layout/fragment_contacts" />
+        tools:layout="@layout/fragment_contacts">
+
+        <action
+            android:id="@+id/action_contacts_to_add_client"
+            app:destination="@id/navigation_add_client" />
+
+        <action
+            android:id="@+id/action_contacts_to_edit_client"
+            app:destination="@id/navigation_edit_client" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_dashboard"
@@ -120,6 +129,24 @@
 
         <argument
             android:name="taskId"
+            android:defaultValue="0"
+            app:argType="integer" />
+    </dialog>
+
+    <dialog
+        android:id="@+id/navigation_add_client"
+        android:name="com.bizsolutions.dealmate.ui.contacts.AddClientDialogFragment"
+        android:label="Add client"
+        tools:layout="@layout/fragment_dialog_add_client" />
+
+    <dialog
+        android:id="@+id/navigation_edit_client"
+        android:name="com.bizsolutions.dealmate.ui.contacts.EditClientDialogFragment"
+        android:label="Edit client"
+        tools:layout="@layout/fragment_dialog_add_client">
+
+        <argument
+            android:name="clientId"
             android:defaultValue="0"
             app:argType="integer" />
     </dialog>

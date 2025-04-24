@@ -55,6 +55,11 @@
     <string name="priority_low">Low</string>
     <string name="priority_medium">Medium</string>
     <string name="priority_high">High</string>
+    <string name="client_name_hint">Client name</string>
+    <string name="phone_hint">Phone</string>
+    <string name="email_hint">Email</string>
 
-
+    <string name="add_client_dialog_title">Add client</string>
+    <string name="edit_client_dialog_title">Edit client</string>
+    <string name="client_saved_snack">Client saved</string>
 </resources>

@@ -9,10 +9,12 @@ import androidx.core.view.marginBottom
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.transition.Transition
 import com.bizsolutions.dealmate.R
 import com.bizsolutions.dealmate.databinding.FragmentContactsBinding
 import com.bizsolutions.dealmate.ext.getThemeColor
+import com.bizsolutions.dealmate.ext.safeNavigate
 import com.bizsolutions.dealmate.ui.MyTransitionListener
 import com.google.android.material.transition.MaterialFadeThrough
 import com.wynneplaga.materialScrollBar2.inidicators.AlphabeticIndicator
@@ -66,6 +68,11 @@ class ContactsFragment : Fragment() {
 
         viewModel.allClients.observe(viewLifecycleOwner) { list ->
             adapter.groupSubmitList(list)
+        }
+
+        binding.fragmentContactsFab.setOnClickListener {
+            val directions = ContactsFragmentDirections.actionContactsToAddClient()
+            findNavController().safeNavigate(directions)
         }
 
         return binding.root

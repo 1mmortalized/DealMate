@@ -60,13 +60,9 @@ open class AddClientDialogFragment : FullscreenDialogFragment() {
 
         baseBinding.fragmentDialogBaseSaveBtn.setOnClickListener {
             newClient?.let { client ->
-                client.title = binding.fdAddCallTitleEdt.editText!!.text.toString()
-                client.date = pickedDate!!
-                client.time = pickedTime!!
-
-                client.clientId = clients.find {
-                    it.name == binding.fdAddCallClientEdtTxt.text.toString()
-                }?.id ?: 0
+                client.name = binding.fdAddClientNameEdt.editText!!.text.toString()
+                client.phone = binding.fdAddClientPhoneEdt.editText!!.text.toString()
+                client.email = binding.fdAddClientEmailEdt.editText!!.text.toString()
 
                 onPositiveButtonClicked(client)
             }
@@ -74,7 +70,7 @@ open class AddClientDialogFragment : FullscreenDialogFragment() {
 
             val snackbar = Snackbar.make(
                 requireParentFragment().requireView(),
-                R.string.call_saved_snack,
+                R.string.client_saved_snack,
                 Snackbar.LENGTH_SHORT
             )
 
@@ -88,35 +84,6 @@ open class AddClientDialogFragment : FullscreenDialogFragment() {
 
         baseBinding.fragmentDialogBaseCloseBtn.setOnClickListener {
             dialog!!.dismiss()
-        }
-
-        binding.fdAddCallDateEdt.editText!!.setOnClickListener {
-            showDatePicker(
-                pickedDate,
-                parentFragmentManager,
-                "DATE_PICKER_TAG"
-            ) { date ->
-                pickedDate = date
-                binding.fdAddCallDateEdt.editText!!.setText(
-                    date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM))
-                )
-            }
-        }
-
-        binding.fdAddCallTimeEdt.editText!!.setOnClickListener {
-            showTimePicker(requireContext(),
-                parentFragmentManager,
-                pickedTime,
-                { pickedTime = it },
-                binding.fdAddCallTimeEdt.editText!!,
-                "START_TIME_PICKER_TAG"
-            )
-        }
-
-        viewModel.allClients.observeOnce(viewLifecycleOwner) { clients ->
-            (binding.fdAddCallClientEdtTxt as MaterialAutoCompleteTextView)
-                .setSimpleItems(clients.map { it.name }.toTypedArray())
-            this.clients = clients
         }
 
         additionalOnCreateView()
