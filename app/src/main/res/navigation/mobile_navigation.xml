@@ -59,13 +59,22 @@
         android:id="@+id/navigation_dashboard"
         android:name="com.bizsolutions.dealmate.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_contacts" />
+        tools:layout="@layout/fragment_dashboard" />
 
     <fragment
         android:id="@+id/navigation_deals"
         android:name="com.bizsolutions.dealmate.ui.deals.DealsFragment"
         android:label="@string/title_deals"
-        tools:layout="@layout/fragment_contacts" />
+        tools:layout="@layout/fragment_deals">
+
+        <action
+            android:id="@+id/action_deal_to_add_deal"
+            app:destination="@id/navigation_add_deal" />
+
+        <action
+            android:id="@+id/action_deal_to_edit_deal"
+            app:destination="@id/navigation_edit_deal" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_task"
@@ -147,6 +156,24 @@
 
         <argument
             android:name="clientId"
+            android:defaultValue="0"
+            app:argType="integer" />
+    </dialog>
+
+    <dialog
+        android:id="@+id/navigation_add_deal"
+        android:name="com.bizsolutions.dealmate.ui.deals.AddDealDialogFragment"
+        android:label="Add deal"
+        tools:layout="@layout/fragment_dialog_add_deal" />
+
+    <dialog
+        android:id="@+id/navigation_edit_deal"
+        android:name="com.bizsolutions.dealmate.ui.deals.EditDealDialogFragment"
+        android:label="Edit deal"
+        tools:layout="@layout/fragment_dialog_add_deal">
+
+        <argument
+            android:name="dealId"
             android:defaultValue="0"
             app:argType="integer" />
     </dialog>

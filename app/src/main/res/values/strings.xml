@@ -62,4 +62,11 @@
     <string name="add_client_dialog_title">Add client</string>
     <string name="edit_client_dialog_title">Edit client</string>
     <string name="client_saved_snack">Client saved</string>
+
+    <string name="currency_hint">Currency</string>
+    <string name="amount_hint">Amount</string>
+
+    <string name="add_deal_dialog_title">Add deal</string>
+    <string name="edit_deal_dialog_title">Edit deal</string>
+    <string name="deal_saved_snack">Deal saved</string>
 </resources>

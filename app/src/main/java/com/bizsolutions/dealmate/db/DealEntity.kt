@@ -3,6 +3,7 @@ package com.bizsolutions.dealmate.db
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Ignore
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import java.time.LocalDate
@@ -18,9 +19,12 @@ import java.util.Date
 )
 data class DealEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    val title: String,
-    val amount: Int,
-    val currency: String,
-    val clientId: Int,
-    @ColumnInfo(defaultValue = "0") val date: LocalDate
-)
+    var title: String,
+    var amount: Int,
+    var currency: String,
+    var clientId: Int,
+    @ColumnInfo(defaultValue = "0") var date: LocalDate
+) {
+    @Ignore
+    constructor(): this(0, "", 0, "", 0, LocalDate.now())
+}

@@ -1,6 +1,8 @@
 package com.bizsolutions.dealmate.data.currency
 
 import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.util.Log
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.longPreferencesKey
@@ -36,7 +38,7 @@ object CurrencyManager {
         val lastUpdate = prefs[longPreferencesKey(PREF_LAST_UPDATE)] ?: 0L
         val isOutdated = System.currentTimeMillis() - lastUpdate > 24 * 60 * 60 * 1000
 
-        return if (jsonString == null || isOutdated) {
+        return if (jsonString == null || (isOutdated && isOnline(context))) {
             fetchRatesFromApi(context)
         } else {
             try {
@@ -80,5 +82,27 @@ object CurrencyManager {
             Log.e(TAG, "Failed to fetch currency rates: ${e.message}")
             null
         }
+    }
+
+    private fun isOnline(context: Context): Boolean {
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+        val capabilities =
+            connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+        if (capabilities != null) {
+            if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
+                Log.i("Internet", "NetworkCapabilities.TRANSPORT_CELLULAR")
+                return true
+            } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                Log.i("Internet", "NetworkCapabilities.TRANSPORT_WIFI")
+                return true
+            } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
+                Log.i("Internet", "NetworkCapabilities.TRANSPORT_ETHERNET")
+                return true
+            }
+        }
+
+        return false
     }
 }
