@@ -49,7 +49,7 @@ class HomeFragment : Fragment() {
             smoothScrollToPosition(calendarViewModel.baseIndex)
         }
 
-        viewPager.adapter = DayPagerAdapter(requireActivity(), calendarViewModel)
+        viewPager.adapter = DayPagerAdapter(this, calendarViewModel)
         viewPager.doOnLayout {
             viewPager.setCurrentItem(calendarViewModel.baseIndex, false)
         }

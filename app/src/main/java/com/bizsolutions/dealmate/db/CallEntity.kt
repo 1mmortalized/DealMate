@@ -2,11 +2,11 @@ package com.bizsolutions.dealmate.db
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Ignore
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import java.time.LocalDate
 import java.time.LocalTime
-import java.util.Date
 
 @Entity(
     tableName = "calls",
@@ -18,9 +18,12 @@ import java.util.Date
 )
 data class CallEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    val title: String,
-    val time: LocalTime,
-    val date: LocalDate,
-    val clientId: Int,
+    var title: String,
+    var time: LocalTime,
+    var date: LocalDate,
+    var clientId: Int,
     val completed: Boolean
-)
+) {
+    @Ignore
+    constructor(): this(0, "", LocalTime.now(), LocalDate.now(), 0, false)
+}
