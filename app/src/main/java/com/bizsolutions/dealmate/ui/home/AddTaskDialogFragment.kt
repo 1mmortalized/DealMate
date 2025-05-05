@@ -134,9 +134,31 @@ class EditTaskDialogFragment : AddTaskDialogFragment() {
 
     override fun additionalOnCreateView() {
         baseBinding.fragmentDialogBaseTitleTxt.setText(R.string.edit_task_dialog_title)
+
+        val taskId = args.taskId
+        viewModel.getTask(taskId).observeOnce(viewLifecycleOwner) { taskWithClient ->
+            val task = taskWithClient.task
+            val client = taskWithClient.client
+
+            newTask?.id = task.id
+            newTask?.progress = task.progress
+
+            binding.fdAddTaskTitleEdt.editText!!.setText(task.title)
+
+            pickedDate = task.date
+            binding.fdAddTaskDateEdt.editText!!.setText(
+                task.date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM))
+            )
+
+            binding.fdAddTaskPriorityEdtTxt.setText(
+                getString(TaskPriority.fromValue(task.priority).labelResId), false
+            )
+            binding.fdAddTaskClientEdtTxt.setText(client.name, false)
+            binding.fdAddTaskDescriptionEdtTxt.setText(task.description)
+        }
     }
 
     override fun onPositiveButtonClicked(task: TaskEntity) {
-//        viewModel.updateTask(task)
+        viewModel.updateTask(task)
     }
 }

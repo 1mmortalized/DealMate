@@ -11,20 +11,16 @@ import com.bizsolutions.dealmate.R
 import com.bizsolutions.dealmate.databinding.FragmentDialogAddEventBinding
 import com.bizsolutions.dealmate.databinding.FragmentDialogBaseBinding
 import com.bizsolutions.dealmate.db.EventEntity
+import com.bizsolutions.dealmate.ext.observeOnce
 import com.bizsolutions.dealmate.ui.FullscreenDialogFragment
 import com.bizsolutions.dealmate.utils.showDatePicker
 import com.bizsolutions.dealmate.utils.showTimePicker
-import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalTime
-import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
-import java.util.Calendar
-import kotlin.getValue
 import kotlin.time.ExperimentalTime
 
 @AndroidEntryPoint
@@ -144,9 +140,32 @@ class EditEventDialogFragment : AddEventDialogFragment() {
 
     override fun additionalOnCreateView() {
         baseBinding.fragmentDialogBaseTitleTxt.setText(R.string.edit_event_dialog_title)
+
+        val eventId = args.eventId
+        viewModel.getEvent(eventId).observeOnce(viewLifecycleOwner) { event ->
+            newEvent?.id = event.id
+            newEvent?.completed = event.completed
+
+            binding.fdAddEventTitleEdt.editText!!.setText(event.title)
+
+            pickedDate = event.date
+            binding.fdAddEventDateEdt.editText!!.setText(
+                event.date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM))
+            )
+
+            pickedStartTime = event.timeStart
+            binding.fdAddEventTimeStartEdt.editText!!.setText(
+                event.timeStart.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT))
+            )
+
+            pickedEndTime = event.timeEnd
+            binding.fdAddEventTimeEndEdt.editText!!.setText(
+                event.timeEnd.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT))
+            )
+        }
     }
 
     override fun onPositiveButtonClicked(event: EventEntity) {
-//        viewModel.updateEvent(event)
+        viewModel.updateEvent(event)
     }
 }

@@ -34,7 +34,13 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun removeEvents(event: EventEntity) {
+    fun updateEvent(event: EventEntity) {
+        viewModelScope.launch {
+            eventRepository.update(event)
+        }
+    }
+
+    fun removeEvent(event: EventEntity) {
         viewModelScope.launch {
             eventRepository.delete(event)
         }
@@ -52,9 +58,17 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun getTask(id: Int) = taskRepository.getTask(id).asLiveData()
+
     fun addTask(task: TaskEntity) {
         viewModelScope.launch {
             taskRepository.insert(task)
+        }
+    }
+
+    fun updateTask(task: TaskEntity) {
+        viewModelScope.launch {
+            taskRepository.update(task)
         }
     }
 
@@ -64,9 +78,17 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun getCall(id: Int) = callRepository.getCall(id).asLiveData()
+
     fun addCall(call: CallEntity) {
         viewModelScope.launch {
             callRepository.insert(call)
+        }
+    }
+
+    fun updateCall(call: CallEntity) {
+        viewModelScope.launch {
+            callRepository.update(call)
         }
     }
 

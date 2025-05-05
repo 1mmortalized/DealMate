@@ -8,9 +8,14 @@ import java.time.LocalDate
 
 class CallRepository(private val dao: CallDao) {
     fun allCallsByDate(date: LocalDate): Flow<List<CallWithClient>> = dao.getAllCallsByDate(date)
+    fun getCall(id: Int) = dao.getCallById(id)
 
     suspend fun insert(call: CallEntity) {
         dao.insertCall(call)
+    }
+
+    suspend fun update(call: CallEntity) {
+        dao.updateCall(call)
     }
 
     suspend fun delete(call: CallEntity) {

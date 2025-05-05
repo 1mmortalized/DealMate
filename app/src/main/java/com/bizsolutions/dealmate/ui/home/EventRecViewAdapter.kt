@@ -13,9 +13,7 @@ import java.time.format.FormatStyle
 
 
 class EventRecViewAdapter(
-    private val onItemClicked: (EventEntity) -> Unit,
-    private val onEditMenuItemClicked: (EventEntity) -> Unit,
-    private val onDeleteMenuItemClicked: (EventEntity) -> Unit
+    private val onItemClicked: (Int) -> Unit
 ) :
     ListAdapter<EventEntity, EventRecViewAdapter.EventViewHolder>(DiffCallback) {
 
@@ -38,7 +36,7 @@ class EventRecViewAdapter(
         )
 
         binding.root.setOnClickListener {
-            onItemClicked(event)
+            onItemClicked(event.id)
         }
 
         if (event.completed) {

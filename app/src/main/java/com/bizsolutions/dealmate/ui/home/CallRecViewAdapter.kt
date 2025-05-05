@@ -13,9 +13,7 @@ import java.time.format.FormatStyle
 
 
 class CallRecViewAdapter(
-    private val onItemClicked: (CallWithClient) -> Unit,
-    private val onEditMenuItemClicked: (CallWithClient) -> Unit,
-    private val onDeleteMenuItemClicked: (CallWithClient) -> Unit
+    private val onItemClicked: (Int) -> Unit
 ) :
     ListAdapter<CallWithClient, CallRecViewAdapter.CallViewHolder>(DiffCallback) {
 
@@ -44,7 +42,7 @@ class CallRecViewAdapter(
             else R.drawable.ic_call)
 
         binding.root.setOnClickListener {
-            onItemClicked(call)
+            onItemClicked(call.call.id)
         }
     }
 

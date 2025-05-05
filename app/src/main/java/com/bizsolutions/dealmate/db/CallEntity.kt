@@ -17,12 +17,12 @@ import java.time.LocalTime
     indices = [Index(value = ["clientId"])]
 )
 data class CallEntity(
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    @PrimaryKey(autoGenerate = true) var id: Int = 0,
     var title: String,
     var time: LocalTime,
     var date: LocalDate,
     var clientId: Int,
-    val completed: Boolean
+    var completed: Boolean
 ) {
     @Ignore
     constructor(): this(0, "", LocalTime.now(), LocalDate.now(), 0, false)

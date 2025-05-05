@@ -8,12 +8,12 @@ import java.time.LocalTime
 
 @Entity(tableName = "events")
 data class EventEntity(
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    @PrimaryKey(autoGenerate = true) var id: Int = 0,
     var title: String,
     var timeStart: LocalTime,
     var timeEnd: LocalTime,
     var date: LocalDate,
-    val completed: Boolean
+    var completed: Boolean
 ) {
     @Ignore
     constructor(): this(0, "", LocalTime.now(), LocalTime.now(), LocalDate.now(), false)

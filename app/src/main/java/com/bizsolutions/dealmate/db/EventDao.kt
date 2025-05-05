@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
 
@@ -17,10 +18,13 @@ interface EventDao {
     fun getEventById(id: Int): Flow<EventEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertEvent(client: EventEntity)
+    suspend fun insertEvent(event: EventEntity)
+
+    @Update
+    suspend fun updateEvent(event: EventEntity)
 
     @Delete
-    suspend fun deleteEvent(client: EventEntity)
+    suspend fun deleteEvent(event: EventEntity)
 
     @Query("UPDATE events SET completed = :completed WHERE id = :id")
     suspend fun completeEvent(id: Int, completed: Boolean)

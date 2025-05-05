@@ -14,9 +14,7 @@ import com.google.android.material.checkbox.MaterialCheckBox
 
 class TaskRecViewAdapter(
     private val onItemClicked: (TaskWithClient) -> Unit,
-    private val onItemCheckedStateChanged: (TaskWithClient, Boolean) -> Unit,
-    private val onEditMenuItemClicked: (TaskWithClient) -> Unit,
-    private val onDeleteMenuItemClicked: (TaskWithClient) -> Unit
+    private val onItemCheckedStateChanged: (TaskWithClient, Boolean) -> Unit
 ) :
     ListAdapter<TaskWithClient, TaskRecViewAdapter.TaskViewHolder>(DiffCallback) {
 

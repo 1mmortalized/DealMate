@@ -2,7 +2,6 @@ package com.bizsolutions.dealmate.repository
 
 import com.bizsolutions.dealmate.db.EventDao
 import com.bizsolutions.dealmate.db.EventEntity
-import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
 
 class EventRepository(private val dao: EventDao) {
@@ -11,6 +10,10 @@ class EventRepository(private val dao: EventDao) {
 
     suspend fun insert(event: EventEntity) {
         dao.insertEvent(event)
+    }
+
+    suspend fun update(event: EventEntity) {
+        dao.updateEvent(event)
     }
 
     suspend fun delete(event: EventEntity) {

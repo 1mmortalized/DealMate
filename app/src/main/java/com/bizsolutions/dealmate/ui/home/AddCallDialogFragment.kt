@@ -12,7 +12,6 @@ import com.bizsolutions.dealmate.databinding.FragmentDialogAddCallBinding
 import com.bizsolutions.dealmate.databinding.FragmentDialogBaseBinding
 import com.bizsolutions.dealmate.db.CallEntity
 import com.bizsolutions.dealmate.db.ClientEntity
-import com.bizsolutions.dealmate.db.TaskEntity
 import com.bizsolutions.dealmate.ext.observeOnce
 import com.bizsolutions.dealmate.ui.FullscreenDialogFragment
 import com.bizsolutions.dealmate.utils.showDatePicker
@@ -142,9 +141,32 @@ class EditCallDialogFragment : AddCallDialogFragment() {
 
     override fun additionalOnCreateView() {
         baseBinding.fragmentDialogBaseTitleTxt.setText(R.string.edit_call_dialog_title)
+
+        val callId = args.callId
+        viewModel.getCall(callId).observeOnce(viewLifecycleOwner) { callWithClient ->
+            val call = callWithClient.call
+            val client = callWithClient.client
+
+            newCall?.id = call.id
+            newCall?.completed = call.completed
+
+            binding.fdAddCallTitleEdt.editText!!.setText(call.title)
+
+            pickedDate = call.date
+            binding.fdAddCallDateEdt.editText!!.setText(
+                call.date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM))
+            )
+
+            pickedTime = call.time
+            binding.fdAddCallTimeEdt.editText!!.setText(
+                call.time.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT))
+            )
+
+            binding.fdAddCallClientEdtTxt.setText(client.name, false)
+        }
     }
 
     override fun onPositiveButtonClicked(call: CallEntity) {
-//        viewModel.updateCall(call)
+        viewModel.updateCall(call)
     }
 }

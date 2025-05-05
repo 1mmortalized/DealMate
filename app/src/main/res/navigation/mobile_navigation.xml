@@ -28,10 +28,6 @@
             app:destination="@id/navigation_add_task" />
 
         <action
-            android:id="@+id/action_home_to_edit_task"
-            app:destination="@id/navigation_edit_task" />
-
-        <action
             android:id="@+id/action_home_to_add_call"
             app:destination="@id/navigation_add_call" />
 
@@ -86,6 +82,10 @@
             android:name="taskId"
             app:argType="integer"
             android:defaultValue="0" />
+
+        <action
+            android:id="@+id/action_task_to_edit_task"
+            app:destination="@id/navigation_edit_task" />
     </fragment>
 
     <dialog
@@ -137,7 +137,7 @@
         tools:layout="@layout/fragment_dialog_add_call">
 
         <argument
-            android:name="taskId"
+            android:name="callId"
             android:defaultValue="0"
             app:argType="integer" />
     </dialog>

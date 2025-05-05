@@ -17,12 +17,12 @@ import java.time.LocalDate
     indices = [Index(value = ["clientId"])]
 )
 data class TaskEntity(
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    @PrimaryKey(autoGenerate = true) var id: Int = 0,
     var title: String,
     var date: LocalDate,
     var priority: Int,
     @ColumnInfo(defaultValue = "") var description: String,
-    @ColumnInfo(defaultValue = "0") val progress: Int,
+    @ColumnInfo(defaultValue = "0") var progress: Int,
     var clientId: Int
 ) {
     @Ignore

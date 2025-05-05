@@ -2,7 +2,6 @@ package com.bizsolutions.dealmate.ui.home.calendar
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.MeasureSpec
@@ -106,22 +105,26 @@ class DayFragment : Fragment() {
     }
 
     private fun setupEvents(date: LocalDate) {
-        _eventAdapter = EventRecViewAdapter(
-            { event ->
-                val bottomSheetDialog =
-                    BottomSheetDialog(requireContext())
-                val contentBinding = LayoutEventBinding.inflate(LayoutInflater.from(context)).apply {
+        _eventAdapter = EventRecViewAdapter { eventId ->
+            val bottomSheetDialog =
+                BottomSheetDialog(requireContext())
+            val contentBinding = LayoutEventBinding.inflate(LayoutInflater.from(context)).apply {
+                viewModel.getEvent(eventId).observe(viewLifecycleOwner) { event ->
                     fragmentEventTitleTxt.text = event.title
-                    fragmentEventDateTxt.text = event.date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL))
+                    fragmentEventDateTxt.text =
+                        event.date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL))
 
-                    val timeStart = event.timeStart.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT))
-                    val timeEnd = event.timeEnd.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT))
+                    val timeStart =
+                        event.timeStart.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT))
+                    val timeEnd =
+                        event.timeEnd.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT))
 
                     val duration = Duration.between(event.timeStart, event.timeEnd)
                     val hours = duration.toHours()
                     val minutes = duration.minusHours(hours).toMinutes()
 
-                    val durationText = "($hours hour${if (hours != 1L) "s" else ""} $minutes minute${if (minutes != 1L) "s" else ""})"
+                    val durationText =
+                        "($hours hour${if (hours != 1L) "s" else ""} $minutes minute${if (minutes != 1L) "s" else ""})"
                     fragmentEventTimeTxt.text = "%s - %s %s".format(timeStart, timeEnd, durationText)
 
                     layoutEventCompleteBtn.isGone = event.completed
@@ -136,13 +139,17 @@ class DayFragment : Fragment() {
                         viewModel.completeEvent(event.id, false)
                         layoutEventUncompleteBtn.switchFadeTo(layoutEventCompleteBtn)
                     }
-                }
 
-                bottomSheetDialog.setContentView(contentBinding.root)
-                bottomSheetDialog.show()
-            },
-            {},
-            {})
+                    layoutEventEditBtn.setOnClickListener {
+                        val directions = HomeFragmentDirections.actionHomeToEditEvent(event.id)
+                        findNavController().safeNavigate(directions)
+                    }
+                }
+            }
+
+            bottomSheetDialog.setContentView(contentBinding.root)
+            bottomSheetDialog.show()
+        }
         setupRecyclerView(
             binding.fragmentDayEventsRecView,
             R.layout.item_event,
@@ -163,10 +170,7 @@ class DayFragment : Fragment() {
                     task.task.id,
                     if (isChecked) 100 else 0
                 )
-                Log.d("DB DEBUG", "Task id:${task.task.id} isChecked:$isChecked")
-            },
-            {},
-            {})
+            })
         setupRecyclerView(
             binding.fragmentDayTasksRecView,
             R.layout.item_task,
@@ -177,46 +181,55 @@ class DayFragment : Fragment() {
     }
 
     private fun setupCalls(date: LocalDate) {
-        _callAdapter = CallRecViewAdapter({ callWithClient ->
-            val call = callWithClient.call
-            val client = callWithClient.client
-
+        _callAdapter = CallRecViewAdapter { callId ->
             val bottomSheetDialog =
                 BottomSheetDialog(requireContext())
             val contentBinding = LayoutCallBinding.inflate(LayoutInflater.from(context)).apply {
-                layoutCallTitleTxt.text = call.title
-                layoutCallClientName.text = client.name
-                layoutCallClientPhone.text = client.phone
+                viewModel.getCall(callId).observe(viewLifecycleOwner) { callWithClient ->
+                    val call = callWithClient.call
+                    val client = callWithClient.client
 
-                val dateTime = LocalDateTime.of(call.date, call.time)
-                layoutCallTimeDateTxt.text = dateTime.format(DateTimeFormatter.ofLocalizedDateTime(
-                    FormatStyle.LONG, FormatStyle.SHORT))
+                    layoutCallTitleTxt.text = call.title
+                    layoutCallClientName.text = client.name
+                    layoutCallClientPhone.text = client.phone
 
-                layoutCallCompleteBtn.isChecked = call.completed
+                    val dateTime = LocalDateTime.of(call.date, call.time)
+                    layoutCallTimeDateTxt.text = dateTime.format(
+                        DateTimeFormatter.ofLocalizedDateTime(
+                            FormatStyle.LONG, FormatStyle.SHORT
+                        )
+                    )
 
-                layoutCallCompleteBtn.addOnCheckedChangeListener { _, isChecked ->
-                    viewModel.completeCall(call.id, isChecked)
-                }
+                    layoutCallCompleteBtn.isChecked = call.completed
 
-                layoutCallBtn.setOnClickListener {
-                    val sendIntent: Intent = Intent().apply {
-                        action = Intent.ACTION_DIAL
-                        data = "tel:${client.phone}".toUri()
+                    layoutCallCompleteBtn.addOnCheckedChangeListener { _, isChecked ->
+                        viewModel.completeCall(call.id, isChecked)
                     }
 
-                    if (sendIntent.resolveActivity(requireContext().packageManager) != null) {
-                        val chooser = Intent.createChooser(sendIntent, null)
-                        startActivity(chooser)
-                    } else {
-                        Toast.makeText(context, R.string.unknown_error, Toast.LENGTH_SHORT).show()
+                    layoutCallBtn.setOnClickListener {
+                        val sendIntent: Intent = Intent().apply {
+                            action = Intent.ACTION_DIAL
+                            data = "tel:${client.phone}".toUri()
+                        }
+
+                        if (sendIntent.resolveActivity(requireContext().packageManager) != null) {
+                            val chooser = Intent.createChooser(sendIntent, null)
+                            startActivity(chooser)
+                        } else {
+                            Toast.makeText(context, R.string.unknown_error, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    layoutCallEditBtn.setOnClickListener {
+                        val directions = HomeFragmentDirections.actionHomeToEditCall(call.id)
+                        findNavController().safeNavigate(directions)
                     }
                 }
             }
 
             bottomSheetDialog.setContentView(contentBinding.root)
             bottomSheetDialog.show()
-        },
-        {}, {})
+        }
         setupRecyclerView(
             binding.fragmentDayCallsRecView,
             R.layout.item_call,
