@@ -20,4 +20,7 @@ interface CallDao {
 
     @Delete
     suspend fun deleteCall(task: CallEntity)
+
+    @Query("UPDATE calls SET completed = :completed WHERE id = :id")
+    suspend fun completeCall(id: Int, completed: Boolean)
 }

@@ -69,4 +69,6 @@
     <string name="add_deal_dialog_title">Add deal</string>
     <string name="edit_deal_dialog_title">Edit deal</string>
     <string name="deal_saved_snack">Deal saved</string>
+
+    <string name="unknown_error">Unknown error</string>
 </resources>

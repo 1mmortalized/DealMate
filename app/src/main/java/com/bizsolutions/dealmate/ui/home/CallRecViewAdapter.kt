@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.bizsolutions.dealmate.R
 import com.bizsolutions.dealmate.databinding.ItemCallBinding
 import com.bizsolutions.dealmate.db.CallWithClient
 import java.time.format.DateTimeFormatter
@@ -12,6 +13,7 @@ import java.time.format.FormatStyle
 
 
 class CallRecViewAdapter(
+    private val onItemClicked: (CallWithClient) -> Unit,
     private val onEditMenuItemClicked: (CallWithClient) -> Unit,
     private val onDeleteMenuItemClicked: (CallWithClient) -> Unit
 ) :
@@ -35,6 +37,15 @@ class CallRecViewAdapter(
         binding.itemCallTimeTxt.text = call.call.time.format(
             DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)
         )
+
+        binding.itemCallIcon.setImageResource(
+            if (call.call.completed)
+                R.drawable.ic_check
+            else R.drawable.ic_call)
+
+        binding.root.setOnClickListener {
+            onItemClicked(call)
+        }
     }
 
 

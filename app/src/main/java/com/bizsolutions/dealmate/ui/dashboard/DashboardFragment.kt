@@ -1,6 +1,5 @@
 package com.bizsolutions.dealmate.ui.dashboard
 
-import android.R.attr.colorPrimary
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
@@ -41,7 +40,6 @@ import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 import kotlin.math.max
 import kotlin.math.roundToInt
-import kotlin.text.replaceFirstChar
 
 @AndroidEntryPoint
 class DashboardFragment : Fragment() {
@@ -97,7 +95,7 @@ class DashboardFragment : Fragment() {
 
     private fun setupIncomeChart(dealsList: List<DealWithClient>) {
         val colorOnSurface = requireContext().getThemeColor(com.google.android.material.R.attr.colorOnSurface)
-        val colorPrimary = requireContext().getThemeColor(com.google.android.material.R.attr.colorPrimary)
+        val colorPrimary = requireContext().getThemeColor(androidx.appcompat.R.attr.colorPrimary)
 
         binding.fragmentDashboardIncomeChart.apply {
             setScaleEnabled(true)
@@ -277,7 +275,7 @@ class DashboardFragment : Fragment() {
         return List(size) { index ->
             val baseHSL = FloatArray(3)
             ColorUtils.colorToHSL(
-                requireContext().getThemeColor(com.google.android.material.R.attr.colorPrimary),
+                requireContext().getThemeColor(androidx.appcompat.R.attr.colorPrimary),
                 baseHSL
             )
 

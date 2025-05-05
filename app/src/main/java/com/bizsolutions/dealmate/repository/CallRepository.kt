@@ -16,4 +16,8 @@ class CallRepository(private val dao: CallDao) {
     suspend fun delete(call: CallEntity) {
         dao.deleteCall(call)
     }
+
+    suspend fun completeCall(id: Int, completed: Boolean) {
+        dao.completeCall(id, completed)
+    }
 }

@@ -10,9 +10,9 @@
       android:pivotY="@integer/viewport_center_y">
 
     <path
-        android:name="@string/check"
+        android:name="@string/cross"
         android:strokeColor="@android:color/black"
-        android:pathData="@string/path_check"
+        android:pathData="@string/path_cross"
         android:strokeWidth="@integer/stroke_width"
         android:strokeLineCap="square" />
   </group>

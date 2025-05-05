@@ -68,7 +68,7 @@ class CalendarAdapter(
         val weekdayTxt: TextView = view.findViewById(R.id.item_calendar_weekday_txt)
     }
 
-    private val colorPrimary: Int = context.getThemeColor(com.google.android.material.R.attr.colorPrimary)
+    private val colorPrimary: Int = context.getThemeColor(androidx.appcompat.R.attr.colorPrimary)
     private val colorSecondaryContainer = context.getThemeColor(com.google.android.material.R.attr.colorSecondaryContainer)
     private val colorOnPrimary: Int = context.getThemeColor(com.google.android.material.R.attr.colorOnPrimary)
     private val colorOnSecondaryContainer = context.getThemeColor(com.google.android.material.R.attr.colorOnSecondaryContainer)

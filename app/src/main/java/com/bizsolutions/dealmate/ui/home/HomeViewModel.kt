@@ -46,6 +46,12 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun completeCall(id: Int, completed: Boolean = true) {
+        viewModelScope.launch {
+            callRepository.completeCall(id, completed)
+        }
+    }
+
     fun addTask(task: TaskEntity) {
         viewModelScope.launch {
             taskRepository.insert(task)

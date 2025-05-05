@@ -99,7 +99,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@string/mark_as_uncompleted"
-            app:icon="@drawable/ic_minus"
+            app:icon="@drawable/ic_cross"
             android:visibility="gone"
             app:iconGravity="textStart" />
 
