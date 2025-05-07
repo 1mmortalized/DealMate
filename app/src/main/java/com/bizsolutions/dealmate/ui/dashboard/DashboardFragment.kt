@@ -34,6 +34,7 @@ import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
+import com.google.android.material.transition.MaterialFadeThrough
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.DecimalFormat
 import java.time.YearMonth
@@ -48,6 +49,19 @@ class DashboardFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: DashboardViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val anim = MaterialFadeThrough().apply {
+            addTarget(R.id.fragment_dashboard)
+        }
+
+        enterTransition = anim
+        exitTransition = anim
+        reenterTransition = anim
+        returnTransition = anim
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

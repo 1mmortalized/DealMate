@@ -35,6 +35,14 @@ class ContactsFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val anim = MaterialFadeThrough().apply {
+            addTarget(R.id.fragment_contacts)
+        }
+
+        exitTransition = anim
+        reenterTransition = anim
+        returnTransition = anim
+
         enterTransition = MaterialFadeThrough().apply {
             addTarget(R.id.fragment_contacts)
 

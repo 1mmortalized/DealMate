@@ -10,11 +10,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
+import com.bizsolutions.dealmate.R
 import com.bizsolutions.dealmate.databinding.FragmentHomeBinding
 import com.bizsolutions.dealmate.ui.home.calendar.CalendarAdapter
 import com.bizsolutions.dealmate.ui.home.calendar.CalendarViewModel
 import com.bizsolutions.dealmate.ui.home.calendar.CenterLinearLayoutManager
 import com.bizsolutions.dealmate.ui.home.calendar.DayPagerAdapter
+import com.google.android.material.transition.MaterialFadeThrough
 import java.time.format.DateTimeFormatter
 
 class HomeFragment : Fragment() {
@@ -23,6 +25,19 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var calendarViewModel: CalendarViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val anim = MaterialFadeThrough().apply {
+            addTarget(R.id.fragment_home)
+        }
+
+        enterTransition = anim
+        exitTransition = anim
+        reenterTransition = anim
+        returnTransition = anim
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

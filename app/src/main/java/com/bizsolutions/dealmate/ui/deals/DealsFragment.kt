@@ -39,8 +39,16 @@ class DealsFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val anim = MaterialFadeThrough().apply {
+            addTarget(R.id.fragment_deals)
+        }
+
+        exitTransition = anim
+        reenterTransition = anim
+        returnTransition = anim
+
         enterTransition = MaterialFadeThrough().apply {
-            addTarget(R.id.fragment_contacts)
+            addTarget(R.id.fragment_deals)
 
             addListener(object : MyTransitionListener() {
                 override fun onTransitionStart(transition: Transition) {

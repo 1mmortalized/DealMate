@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.bizsolutions.dealmate.ui.contacts.BottomFadingEdgeNestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_dashboard"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,7 +9,6 @@
     android:fadingEdgeLength="25dp">
 
     <LinearLayout
-        android:id="@+id/fragment_dashboard"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
