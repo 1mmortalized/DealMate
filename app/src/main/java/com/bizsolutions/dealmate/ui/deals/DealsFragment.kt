@@ -64,7 +64,12 @@ class DealsFragment : Fragment() {
         }
 
         _adapter = DealRecViewAdapter(
-            {}, {}
+            requireContext(),
+            { dealId ->
+                val directions = DealsFragmentDirections.actionDealToEditDeal(dealId)
+                findNavController().safeNavigate(directions)
+            },
+            {}
         )
         binding.fragmentDealsRecView.adapter = adapter
 

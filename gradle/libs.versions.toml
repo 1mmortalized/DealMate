@@ -18,6 +18,7 @@ navigationFragmentKtx = "2.8.9"
 navigationUiKtx = "2.8.9"
 retrofit = "2.11.0"
 roomCompiler = "2.7.0"
+swipemenurecyclerview = "2.1.6"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -42,6 +43,7 @@ androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation
 materialscrollbar2 = { module = "com.github.wynneplaga:MaterialScrollbar2", version.ref = "materialscrollbar2" }
 mpandroidchart = { module = "com.github.1mmortalized:MPAndroidChart", version.ref = "mpandroidchart" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+swipemenurecyclerview = { module = "com.github.1mmortalized:SwipeMenuRecyclerView", version.ref = "swipemenurecyclerview" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

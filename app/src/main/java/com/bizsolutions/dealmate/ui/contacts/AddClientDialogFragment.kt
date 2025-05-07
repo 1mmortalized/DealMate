@@ -10,20 +10,11 @@ import androidx.navigation.fragment.navArgs
 import com.bizsolutions.dealmate.R
 import com.bizsolutions.dealmate.databinding.FragmentDialogAddClientBinding
 import com.bizsolutions.dealmate.databinding.FragmentDialogBaseBinding
-import com.bizsolutions.dealmate.db.CallEntity
 import com.bizsolutions.dealmate.db.ClientEntity
-import com.bizsolutions.dealmate.db.TaskEntity
 import com.bizsolutions.dealmate.ext.observeOnce
 import com.bizsolutions.dealmate.ui.FullscreenDialogFragment
-import com.bizsolutions.dealmate.ui.home.AddTaskDialogFragment
-import com.bizsolutions.dealmate.ui.home.EditCallDialogFragmentArgs
-import com.bizsolutions.dealmate.utils.showDatePicker
-import com.bizsolutions.dealmate.utils.showTimePicker
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import dagger.hilt.android.AndroidEntryPoint
-import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
 import kotlin.time.ExperimentalTime
 
 @AndroidEntryPoint
@@ -104,9 +95,18 @@ class EditClientDialogFragment : AddClientDialogFragment() {
 
     override fun additionalOnCreateView() {
         baseBinding.fragmentDialogBaseTitleTxt.setText(R.string.edit_client_dialog_title)
+
+        val clientId = args.clientId
+        viewModel.getClient(clientId).observeOnce(viewLifecycleOwner) { client ->
+            newClient?.id = client.id
+
+            binding.fdAddClientNameEdt.editText!!.setText(client.name)
+            binding.fdAddClientPhoneEdt.editText!!.setText(client.phone)
+            binding.fdAddClientEmailEdt.editText!!.setText(client.email)
+        }
     }
 
     override fun onPositiveButtonClicked(client: ClientEntity) {
-//        viewModel.updateClient(client)
+        viewModel.updateClient(client)
     }
 }

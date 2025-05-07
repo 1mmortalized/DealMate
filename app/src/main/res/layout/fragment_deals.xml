@@ -83,7 +83,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fragment_deals_total_income_layout">
 
-            <com.bizsolutions.dealmate.ui.contacts.BottomFadingEdgeRecyclerView
+            <com.bizsolutions.dealmate.ui.contacts.BottomFadingEdgeSwipeMenuRecyclerView
                 android:id="@+id/fragment_deals_rec_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

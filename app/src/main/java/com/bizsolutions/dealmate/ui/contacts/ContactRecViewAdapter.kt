@@ -1,20 +1,28 @@
 package com.bizsolutions.dealmate.ui.contacts
 
+import android.animation.ArgbEvaluator
+import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.core.graphics.ColorUtils
 import androidx.core.view.children
 import androidx.core.view.isInvisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.aitsuki.swipe.SwipeLayout
 import com.bizsolutions.dealmate.databinding.ItemContactBinding
 import com.bizsolutions.dealmate.db.ClientEntity
+import com.bizsolutions.dealmate.ext.getThemeColor
 import com.wynneplaga.materialScrollBar2.inidicators.AlphabeticIndicator
 
 
 class ContactRecViewAdapter(
-    private val onEditMenuItemClicked: (ClientEntity) -> Unit,
-    private val onDeleteMenuItemClicked: (ClientEntity) -> Unit
+    private val context: Context,
+    private val onEditMenuItemClicked: (Int) -> Unit,
+    private val onDeleteMenuItemClicked: (Int) -> Unit
 ) :
     ListAdapter<ContactListItem, ContactRecViewAdapter.ContactViewHolder>(DiffCallback), AlphabeticIndicator.INameableAdapter {
 
@@ -43,15 +51,17 @@ class ContactRecViewAdapter(
         val binding = holder.binding
         when (val item = getItem(position)) {
             is ContactListItem.Header -> {
-                for (view in binding.root.children) {
+                for (view in binding.itemContactLayout.children) {
                     view.isInvisible = true
                 }
                 binding.itemContactHeaderTxt.isInvisible = false
 
                 binding.itemContactHeaderTxt.text = item.letter
+
+                binding.itemContactSwipeLayout.swipeFlags = 0
             }
             is ContactListItem.Contact -> {
-                for (view in binding.root.children) {
+                for (view in binding.itemContactLayout.children) {
                     view.isInvisible = false
                 }
                 binding.itemContactHeaderTxt.isInvisible = true
@@ -59,6 +69,33 @@ class ContactRecViewAdapter(
                 binding.itemContactName.text = item.client.name
                 binding.itemContactPhone.text = item.client.phone
                 binding.itemContactEmail.text = item.client.email
+
+                binding.itemContactSwipeLayout.swipeFlags = SwipeLayout.LEFT or SwipeLayout.RIGHT
+
+                val startColor = Color.TRANSPARENT
+                val endColor = ColorUtils.setAlphaComponent(
+                    context.getThemeColor(com.google.android.material.R.attr.colorSecondaryContainer), 120)
+                val argbEvaluator = ArgbEvaluator()
+
+                binding.itemContactSwipeLayout.clearListeners()
+                binding.itemContactSwipeLayout.addListener(object : SwipeLayout.Listener {
+                    override fun onSwipe(menuView: View, swipeOffset: Float) {
+                        val color = argbEvaluator.evaluate(swipeOffset, startColor, endColor) as Int
+                        binding.itemContactLayout.setBackgroundColor(color)
+                    }
+
+                    override fun onSwipeStateChanged(menuView: View, newState: Int) {}
+                    override fun onMenuOpened(menuView: View) {}
+                    override fun onMenuClosed(menuView: View) {}
+                })
+
+                binding.itemContactEditBtn.setOnClickListener {
+                    onEditMenuItemClicked(item.client.id)
+                }
+
+                binding.itemContactDeleteBtn.setOnClickListener {
+                    onDeleteMenuItemClicked(item.client.id)
+                }
             }
         }
     }

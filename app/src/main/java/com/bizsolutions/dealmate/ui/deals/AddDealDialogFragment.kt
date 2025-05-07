@@ -137,9 +137,27 @@ class EditDealDialogFragment : AddDealDialogFragment() {
 
     override fun additionalOnCreateView() {
         baseBinding.fragmentDialogBaseTitleTxt.setText(R.string.edit_deal_dialog_title)
+
+        val dealId = args.dealId
+        viewModel.getDeal(dealId).observeOnce(viewLifecycleOwner) { dealWithClient ->
+            val deal = dealWithClient.deal
+            val client = dealWithClient.client
+
+            newDeal?.id = deal.id
+
+            binding.fdAddDealTitleEdt.editText!!.setText(deal.title)
+            binding.fdAddDealAmountEdt.editText!!.setText(deal.amount.toString())
+            binding.fdAddDealCurrencyEdt.setText(deal.currency, false)
+            binding.fdAddDealClientEdtTxt.setText(client.name, false)
+
+            pickedDate = deal.date
+            binding.fdAddDealDateEdt.editText!!.setText(
+                deal.date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM))
+            )
+        }
     }
 
     override fun onPositiveButtonClicked(deal: DealEntity) {
-//        viewModel.updateDeal(deal)
+        viewModel.updateDeal(deal)
     }
 }

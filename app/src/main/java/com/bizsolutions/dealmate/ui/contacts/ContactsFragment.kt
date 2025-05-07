@@ -60,7 +60,12 @@ class ContactsFragment : Fragment() {
         }
 
         _adapter = ContactRecViewAdapter(
-            {}, {}
+            requireContext(),
+            { clientId ->
+                val directions = ContactsFragmentDirections.actionContactsToEditClient(clientId)
+                findNavController().safeNavigate(directions)
+            },
+            {}
         )
         binding.fragmentContactsRecView.adapter = adapter
         binding.fragmentContactsRecView.setHasFixedSize(true)

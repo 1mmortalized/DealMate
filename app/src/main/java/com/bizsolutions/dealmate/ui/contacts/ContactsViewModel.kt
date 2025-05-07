@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.bizsolutions.dealmate.db.ClientEntity
-import com.bizsolutions.dealmate.db.EventEntity
 import com.bizsolutions.dealmate.repository.ClientRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -16,9 +15,23 @@ class ContactsViewModel @Inject constructor(
 ) : ViewModel() {
     val allClients = clientRepository.allClients.asLiveData()
 
+    fun getClient(id: Int) = clientRepository.getClient(id).asLiveData()
+
     fun addClient(client: ClientEntity) {
         viewModelScope.launch {
             clientRepository.insert(client)
+        }
+    }
+
+    fun updateClient(client: ClientEntity) {
+        viewModelScope.launch {
+            clientRepository.update(client)
+        }
+    }
+
+    fun removeClient(client: ClientEntity) {
+        viewModelScope.launch {
+            clientRepository.delete(client)
         }
     }
 }

@@ -7,7 +7,6 @@ import androidx.room.Ignore
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import java.time.LocalDate
-import java.util.Date
 
 @Entity(
     tableName = "deals",
@@ -18,7 +17,7 @@ import java.util.Date
     indices = [Index(value = ["clientId"])]
 )
 data class DealEntity(
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    @PrimaryKey(autoGenerate = true) var id: Int = 0,
     var title: String,
     var amount: Int,
     var currency: String,

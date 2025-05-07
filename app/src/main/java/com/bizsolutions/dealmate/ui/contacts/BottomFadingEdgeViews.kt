@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.RecyclerView
+import com.aitsuki.swipe.SwipeMenuRecyclerView
 
 class BottomFadingEdgeRecyclerView @JvmOverloads constructor(
     context: Context,
@@ -19,6 +20,14 @@ class BottomFadingEdgeNestedScrollView @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : NestedScrollView(context, attrs, defStyleAttr) {
+
+    override fun getBottomFadingEdgeStrength() = 0f
+}
+
+class BottomFadingEdgeSwipeMenuRecyclerView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null
+) : SwipeMenuRecyclerView(context, attrs) {
 
     override fun getBottomFadingEdgeStrength() = 0f
 }

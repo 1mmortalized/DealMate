@@ -1,17 +1,23 @@
 package com.bizsolutions.dealmate.ui.deals
 
+import android.animation.ArgbEvaluator
+import android.content.Context
+import android.graphics.Color
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.RelativeSizeSpan
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.core.graphics.ColorUtils
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.aitsuki.swipe.SwipeLayout
 import com.bizsolutions.dealmate.databinding.ItemDealBinding
 import com.bizsolutions.dealmate.databinding.ItemDealHeaderBinding
 import com.bizsolutions.dealmate.db.DealWithClient
-import com.bizsolutions.dealmate.db.EventEntity
+import com.bizsolutions.dealmate.ext.getThemeColor
 import java.text.DecimalFormat
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
@@ -19,8 +25,9 @@ import java.util.Locale
 
 
 class DealRecViewAdapter(
-    private val onEditMenuItemClicked: (EventEntity) -> Unit,
-    private val onDeleteMenuItemClicked: (EventEntity) -> Unit
+    private val context: Context,
+    private val onEditMenuItemClicked: (Int) -> Unit,
+    private val onDeleteMenuItemClicked: (Int) -> Unit
 ) :
     ListAdapter<DealListItem, ViewHolder>(DiffCallback) {
 
@@ -94,6 +101,31 @@ class DealRecViewAdapter(
 
                 binding.itemDealDivider.alpha =
                     if (position > 0 && getItem(position - 1) is DealListItem.Header) 1f else 0.2f
+
+                val startColor = Color.TRANSPARENT
+                val endColor = ColorUtils.setAlphaComponent(
+                    context.getThemeColor(com.google.android.material.R.attr.colorSecondaryContainer), 120)
+                val argbEvaluator = ArgbEvaluator()
+
+                binding.itemDealSwipeLayout.clearListeners()
+                binding.itemDealSwipeLayout.addListener(object : SwipeLayout.Listener {
+                    override fun onSwipe(menuView: View, swipeOffset: Float) {
+                        val color = argbEvaluator.evaluate(swipeOffset, startColor, endColor) as Int
+                        binding.itemDealLayout.setBackgroundColor(color)
+                    }
+
+                    override fun onSwipeStateChanged(menuView: View, newState: Int) {}
+                    override fun onMenuOpened(menuView: View) {}
+                    override fun onMenuClosed(menuView: View) {}
+                })
+
+                binding.itemDealEditBtn.setOnClickListener {
+                    onEditMenuItemClicked(deal.id)
+                }
+
+                binding.itemDealDeleteBtn.setOnClickListener {
+                    onDeleteMenuItemClicked(deal.id)
+                }
             }
         }
     }
