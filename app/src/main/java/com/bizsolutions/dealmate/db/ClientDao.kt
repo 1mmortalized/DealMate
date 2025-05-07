@@ -1,7 +1,6 @@
 package com.bizsolutions.dealmate.db
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -22,6 +21,6 @@ interface ClientDao {
     @Update
     suspend fun updateClient(client: ClientEntity)
 
-    @Delete
-    suspend fun deleteClient(client: ClientEntity)
+    @Query("DELETE FROM clients WHERE id = :id")
+    suspend fun deleteClient(id: Int)
 }

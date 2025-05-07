@@ -29,9 +29,9 @@ class ContactsViewModel @Inject constructor(
         }
     }
 
-    fun removeClient(client: ClientEntity) {
+    fun removeClient(id: Int) {
         viewModelScope.launch {
-            clientRepository.delete(client)
+            clientRepository.delete(id)
         }
     }
 }

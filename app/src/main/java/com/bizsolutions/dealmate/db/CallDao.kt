@@ -18,7 +18,7 @@ interface CallDao {
 
     @Transaction
     @Query("SELECT * FROM calls WHERE id = :id")
-    fun getCallById(id: Int): Flow<CallWithClient>
+    fun getCallById(id: Int): Flow<CallWithClient?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCall(task: CallEntity)

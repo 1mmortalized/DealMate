@@ -71,4 +71,23 @@
     <string name="deal_saved_snack">Deal saved</string>
 
     <string name="unknown_error">Unknown error</string>
+
+    <string name="dlg_pos_answer">Yes</string>
+    <string name="dlg_neg_answer">No</string>
+    <string name="del_dlg_msg">Are you sure?</string>
+
+    <string name="del_event_dlg_title">Delete event</string>
+    <string name="event_removed_snack">Event removed</string>
+
+    <string name="del_task_dlg_title">Delete task</string>
+    <string name="task_removed_snack">Task removed</string>
+
+    <string name="del_call_dlg_title">Delete call</string>
+    <string name="call_removed_snack">Call removed</string>
+
+    <string name="del_client_dlg_title">Delete client</string>
+    <string name="client_removed_snack">Client removed</string>
+
+    <string name="del_deal_dlg_title">Delete deal</string>
+    <string name="deal_removed_snack">Deal removed</string>
 </resources>

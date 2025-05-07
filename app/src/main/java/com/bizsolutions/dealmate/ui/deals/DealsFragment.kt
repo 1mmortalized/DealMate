@@ -17,6 +17,7 @@ import com.bizsolutions.dealmate.data.currency.CurrencyManager
 import com.bizsolutions.dealmate.databinding.FragmentDealsBinding
 import com.bizsolutions.dealmate.db.DealWithClient
 import com.bizsolutions.dealmate.ext.safeNavigate
+import com.bizsolutions.dealmate.ext.showDeleteConfirmationDialog
 import com.bizsolutions.dealmate.ui.MyTransitionListener
 import com.google.android.material.transition.MaterialFadeThrough
 import dagger.hilt.android.AndroidEntryPoint
@@ -69,7 +70,15 @@ class DealsFragment : Fragment() {
                 val directions = DealsFragmentDirections.actionDealToEditDeal(dealId)
                 findNavController().safeNavigate(directions)
             },
-            {}
+            { dealId ->
+                requireContext().showDeleteConfirmationDialog(
+                    R.string.del_deal_dlg_title,
+                    R.string.deal_removed_snack,
+                    requireView()
+                ) {
+                    viewModel.removeDeal(dealId)
+                }
+            }
         )
         binding.fragmentDealsRecView.adapter = adapter
 

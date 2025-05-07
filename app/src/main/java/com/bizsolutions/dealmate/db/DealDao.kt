@@ -1,7 +1,6 @@
 package com.bizsolutions.dealmate.db
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -19,11 +18,11 @@ interface DealDao {
     fun getDealById(id: Int): Flow<DealWithClient>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertDeal(task: DealEntity)
+    suspend fun insertDeal(deal: DealEntity)
 
     @Update
     suspend fun updateDeal(deal: DealEntity)
 
-    @Delete
-    suspend fun deleteDeal(task: DealEntity)
+    @Query("DELETE FROM deals WHERE id = :id")
+    suspend fun deleteDeal(id: Int)
 }

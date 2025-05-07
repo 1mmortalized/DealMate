@@ -21,6 +21,7 @@ import com.bizsolutions.dealmate.databinding.FragmentDayBinding
 import com.bizsolutions.dealmate.databinding.LayoutCallBinding
 import com.bizsolutions.dealmate.databinding.LayoutEventBinding
 import com.bizsolutions.dealmate.ext.safeNavigate
+import com.bizsolutions.dealmate.ext.showDeleteConfirmationDialog
 import com.bizsolutions.dealmate.ext.switchFadeTo
 import com.bizsolutions.dealmate.ui.home.CallRecViewAdapter
 import com.bizsolutions.dealmate.ui.home.EventRecViewAdapter
@@ -110,6 +111,8 @@ class DayFragment : Fragment() {
                 BottomSheetDialog(requireContext())
             val contentBinding = LayoutEventBinding.inflate(LayoutInflater.from(context)).apply {
                 viewModel.getEvent(eventId).observe(viewLifecycleOwner) { event ->
+                    if (event == null) return@observe
+
                     fragmentEventTitleTxt.text = event.title
                     fragmentEventDateTxt.text =
                         event.date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL))
@@ -143,6 +146,17 @@ class DayFragment : Fragment() {
                     layoutEventEditBtn.setOnClickListener {
                         val directions = HomeFragmentDirections.actionHomeToEditEvent(event.id)
                         findNavController().safeNavigate(directions)
+                    }
+
+                    layoutEventDeleteBtn.setOnClickListener {
+                        requireContext().showDeleteConfirmationDialog(
+                            R.string.del_event_dlg_title,
+                            R.string.event_removed_snack,
+                            requireView()
+                        ) {
+                            bottomSheetDialog.dismiss()
+                            viewModel.removeEvent(event)
+                        }
                     }
                 }
             }
@@ -186,6 +200,8 @@ class DayFragment : Fragment() {
                 BottomSheetDialog(requireContext())
             val contentBinding = LayoutCallBinding.inflate(LayoutInflater.from(context)).apply {
                 viewModel.getCall(callId).observe(viewLifecycleOwner) { callWithClient ->
+                    if(callWithClient == null) return@observe
+
                     val call = callWithClient.call
                     val client = callWithClient.client
 
@@ -223,6 +239,17 @@ class DayFragment : Fragment() {
                     layoutCallEditBtn.setOnClickListener {
                         val directions = HomeFragmentDirections.actionHomeToEditCall(call.id)
                         findNavController().safeNavigate(directions)
+                    }
+
+                    layoutCallDeleteBtn.setOnClickListener {
+                        requireContext().showDeleteConfirmationDialog(
+                            R.string.del_call_dlg_title,
+                            R.string.call_removed_snack,
+                            requireView()
+                        ) {
+                            bottomSheetDialog.dismiss()
+                            viewModel.removeCall(call)
+                        }
                     }
                 }
             }

@@ -32,9 +32,9 @@ class DealsViewModel @Inject constructor(
         }
     }
 
-    fun removeDeal(deal: DealEntity) {
+    fun removeDeal(id: Int) {
         viewModelScope.launch {
-            dealRepository.delete(deal)
+            dealRepository.delete(id)
         }
     }
 }

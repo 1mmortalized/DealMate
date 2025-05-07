@@ -137,6 +137,8 @@ class EditTaskDialogFragment : AddTaskDialogFragment() {
 
         val taskId = args.taskId
         viewModel.getTask(taskId).observeOnce(viewLifecycleOwner) { taskWithClient ->
+            if (taskWithClient == null) return@observeOnce
+
             val task = taskWithClient.task
             val client = taskWithClient.client
 

@@ -18,8 +18,8 @@ class TaskRepository(private val dao: TaskDao) {
         dao.updateTask(task)
     }
 
-    suspend fun delete(task: TaskEntity) {
-        dao.deleteTask(task)
+    suspend fun delete(id: Int) {
+        dao.deleteTask(id)
     }
 
     suspend fun updateProgress(id: Int, progress: Int) {

@@ -144,6 +144,8 @@ class EditCallDialogFragment : AddCallDialogFragment() {
 
         val callId = args.callId
         viewModel.getCall(callId).observeOnce(viewLifecycleOwner) { callWithClient ->
+            if(callWithClient == null) return@observeOnce
+
             val call = callWithClient.call
             val client = callWithClient.client
 

@@ -15,6 +15,7 @@ import com.bizsolutions.dealmate.databinding.FragmentTaskBinding
 import com.bizsolutions.dealmate.db.TaskWithClient
 import com.bizsolutions.dealmate.ext.getThemeColor
 import com.bizsolutions.dealmate.ext.safeNavigate
+import com.bizsolutions.dealmate.ext.showDeleteConfirmationDialog
 import com.bizsolutions.dealmate.ui.ToolbarMenuHandler
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.format.DateTimeFormatter
@@ -39,6 +40,8 @@ class TaskFragment : Fragment(), ToolbarMenuHandler {
         _binding = FragmentTaskBinding.inflate(inflater, container, false)
 
         viewModel.getTask(args.taskId).observe(viewLifecycleOwner) { newTaskWithClient ->
+            if (newTaskWithClient == null) return@observe
+
             val oldTaskWithClient = lastTaskWithClient
             val newTask = newTaskWithClient.task
             val newClient = newTaskWithClient.client
@@ -103,6 +106,18 @@ class TaskFragment : Fragment(), ToolbarMenuHandler {
 
                 val directions = TaskFragmentDirections.actionTaskToEditTask(taskId)
                 findNavController().safeNavigate(directions)
+
+                true
+            }
+            R.id.action_delete -> {
+                requireContext().showDeleteConfirmationDialog(
+                    R.string.del_task_dlg_title,
+                    R.string.task_removed_snack,
+                    requireView()
+                ) {
+                    findNavController().popBackStack()
+                    viewModel.removeTask(args.taskId)
+                }
 
                 true
             }

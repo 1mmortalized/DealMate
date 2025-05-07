@@ -143,6 +143,8 @@ class EditEventDialogFragment : AddEventDialogFragment() {
 
         val eventId = args.eventId
         viewModel.getEvent(eventId).observeOnce(viewLifecycleOwner) { event ->
+            if (event == null) return@observeOnce
+
             newEvent?.id = event.id
             newEvent?.completed = event.completed
 

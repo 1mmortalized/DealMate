@@ -17,7 +17,7 @@ class ClientRepository(private val dao: ClientDao) {
         dao.updateClient(client)
     }
 
-    suspend fun delete(client: ClientEntity) {
-        dao.deleteClient(client)
+    suspend fun delete(id: Int) {
+        dao.deleteClient(id)
     }
 }

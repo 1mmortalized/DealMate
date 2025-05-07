@@ -19,4 +19,10 @@ class TaskViewModel @Inject constructor(
             taskRepository.updateProgress(id, progress)
         }
     }
+
+    fun removeTask(id: Int) {
+        viewModelScope.launch {
+            taskRepository.delete(id)
+        }
+    }
 }

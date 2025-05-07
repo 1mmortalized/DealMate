@@ -18,7 +18,7 @@ class DealRepository(private val dao: DealDao) {
         dao.updateDeal(deal)
     }
 
-    suspend fun delete(deal: DealEntity) {
-        dao.deleteDeal(deal)
+    suspend fun delete(id: Int) {
+        dao.deleteDeal(id)
     }
 }

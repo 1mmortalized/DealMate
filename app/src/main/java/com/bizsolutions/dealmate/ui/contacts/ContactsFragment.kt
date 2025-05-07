@@ -15,6 +15,7 @@ import com.bizsolutions.dealmate.R
 import com.bizsolutions.dealmate.databinding.FragmentContactsBinding
 import com.bizsolutions.dealmate.ext.getThemeColor
 import com.bizsolutions.dealmate.ext.safeNavigate
+import com.bizsolutions.dealmate.ext.showDeleteConfirmationDialog
 import com.bizsolutions.dealmate.ui.MyTransitionListener
 import com.google.android.material.transition.MaterialFadeThrough
 import com.wynneplaga.materialScrollBar2.inidicators.AlphabeticIndicator
@@ -65,7 +66,15 @@ class ContactsFragment : Fragment() {
                 val directions = ContactsFragmentDirections.actionContactsToEditClient(clientId)
                 findNavController().safeNavigate(directions)
             },
-            {}
+            { clientId ->
+                requireContext().showDeleteConfirmationDialog(
+                    R.string.del_client_dlg_title,
+                    R.string.client_removed_snack,
+                    requireView()
+                ) {
+                    viewModel.removeClient(clientId)
+                }
+            }
         )
         binding.fragmentContactsRecView.adapter = adapter
         binding.fragmentContactsRecView.setHasFixedSize(true)

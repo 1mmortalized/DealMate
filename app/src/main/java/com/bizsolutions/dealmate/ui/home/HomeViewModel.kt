@@ -92,5 +92,11 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun removeCall(call: CallEntity) {
+        viewModelScope.launch {
+            callRepository.delete(call)
+        }
+    }
+
     val allClients = clientRepository.allClients.asLiveData()
 }
