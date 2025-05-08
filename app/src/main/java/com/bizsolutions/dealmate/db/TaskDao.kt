@@ -30,4 +30,7 @@ interface TaskDao {
 
     @Query("UPDATE tasks SET progress = :progress WHERE id = :id")
     suspend fun updateProgress(id: Int, progress: Int)
+
+    @Query("SELECT * FROM tasks WHERE progress != 100 AND postponed = 0 AND date < :today")
+    suspend fun getOverdueUncompletedTasks(today: LocalDate): List<TaskEntity>
 }

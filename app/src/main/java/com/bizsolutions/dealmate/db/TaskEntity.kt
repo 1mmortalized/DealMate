@@ -23,8 +23,18 @@ data class TaskEntity(
     var priority: Int,
     @ColumnInfo(defaultValue = "") var description: String,
     @ColumnInfo(defaultValue = "0") var progress: Int,
-    var clientId: Int
+    var clientId: Int,
+    @ColumnInfo(defaultValue = "0") var postponed: Boolean
 ) {
     @Ignore
-    constructor(): this(0, "", LocalDate.now(), 3, "", 0, 0)
+    constructor(): this(0, "", LocalDate.now(), 3, "", 0, 0, false)
+
+    @Ignore
+    fun extractKeywords(): List<String> {
+        val stopWords = setOf("і", "в", "на", "з", "та", "що", "це", "по", "до", "за")
+        return title.lowercase()
+            .replace(Regex("[^a-zа-яіїєґ0-9 ]"), "")
+            .split(" ")
+            .filter { it.isNotBlank() && it !in stopWords }
+    }
 }

@@ -6,11 +6,14 @@ import com.bizsolutions.dealmate.db.CallDao
 import com.bizsolutions.dealmate.db.ClientDao
 import com.bizsolutions.dealmate.db.DealDao
 import com.bizsolutions.dealmate.db.EventDao
+import com.bizsolutions.dealmate.db.KeywordDao
+import com.bizsolutions.dealmate.db.KeywordEntity
 import com.bizsolutions.dealmate.db.TaskDao
 import com.bizsolutions.dealmate.repository.CallRepository
 import com.bizsolutions.dealmate.repository.ClientRepository
 import com.bizsolutions.dealmate.repository.DealRepository
 import com.bizsolutions.dealmate.repository.EventRepository
+import com.bizsolutions.dealmate.repository.KeywordRepository
 import com.bizsolutions.dealmate.repository.TaskRepository
 import dagger.Module
 import dagger.Provides
@@ -52,4 +55,9 @@ object DatabaseModule {
     fun provideDealDao(database: AppDatabase): DealDao = database.dealDao()
     @Provides
     fun provideDealRepository(dao: DealDao): DealRepository = DealRepository(dao)
+
+    @Provides
+    fun provideKeywordDao(database: AppDatabase): KeywordDao = database.keywordDao()
+    @Provides
+    fun provideKeywordRepository(dao: KeywordDao): KeywordRepository = KeywordRepository(dao)
 }

@@ -14,6 +14,7 @@ interface DealDao {
     @Query("SELECT * FROM deals ORDER BY id DESC")
     fun getAllDeals(): Flow<List<DealWithClient>>
 
+    @Transaction
     @Query("SELECT * FROM deals WHERE id = :id")
     fun getDealById(id: Int): Flow<DealWithClient>
 

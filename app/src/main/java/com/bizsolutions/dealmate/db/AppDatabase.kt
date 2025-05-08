@@ -17,12 +17,15 @@ import java.time.LocalTime
     TaskEntity::class,
     EventEntity::class,
     CallEntity::class,
-    DealEntity::class],
-    version = 4, exportSchema = true,
+    DealEntity::class,
+    KeywordEntity::class],
+    version = 6, exportSchema = true,
     autoMigrations = [
         AutoMigration(from = 1, to = 2),
         AutoMigration(from = 2, to = 3),
         AutoMigration(from = 3, to = 4, DeleteOldColumn::class),
+        AutoMigration(from = 4, to = 5),
+        AutoMigration(from = 5, to = 6),
     ])
 @TypeConverters(MyTypeConverters::class)
 abstract class AppDatabase : RoomDatabase() {
@@ -31,6 +34,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun taskDao(): TaskDao
     abstract fun callDao(): CallDao
     abstract fun dealDao(): DealDao
+    abstract fun keywordDao(): KeywordDao
 
     companion object {
         @Volatile

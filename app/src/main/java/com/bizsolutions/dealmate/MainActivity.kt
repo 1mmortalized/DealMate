@@ -1,26 +1,39 @@
 package com.bizsolutions.dealmate
 
 import android.os.Bundle
+import android.util.Log
 import android.view.ViewGroup.MarginLayoutParams
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.bizsolutions.dealmate.databinding.ActivityMainBinding
 import com.bizsolutions.dealmate.ui.ToolbarMenuHandler
+import com.bizsolutions.dealmate.ui.home.HomeViewModel
+import com.chaquo.python.Python
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.color.utilities.Score.score
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.util.ArrayList
+import kotlin.getValue
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+
+    private val viewModel: MainActivityViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,5 +98,21 @@ class MainActivity : AppCompatActivity() {
 
         binding.toolbar.setupWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        val py = Python.getInstance()
+        val keywordsModule = py.getModule("keywords")
+        val extractKeywordsFunction = keywordsModule["extract_keywords"]
+
+        lifecycleScope.launch {
+            val today = LocalDate.now()
+            val uncompletedTasks = viewModel.getOverdueUncompletedTasks(today)
+
+            uncompletedTasks.forEach { task ->
+//                val updatedTask = task.copy(postponed = true)
+//                taskDao.update(updatedTask)
+                val keywordsRaw = extractKeywordsFunction?.call(task.title)
+                val keywords = keywordsRaw?.asList()?.map { it.toJava(String::class.java) }
+            }
+        }
     }
 }

@@ -25,4 +25,7 @@ class TaskRepository(private val dao: TaskDao) {
     suspend fun updateProgress(id: Int, progress: Int) {
         dao.updateProgress(id, progress)
     }
+
+    suspend fun getOverdueUncompletedTasks(date: LocalDate) =
+        dao.getOverdueUncompletedTasks(date)
 }

@@ -6,6 +6,7 @@ plugins {
     id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
     id("androidx.navigation.safeargs.kotlin")
+    id("com.chaquo.python")
 }
 
 android {
@@ -23,6 +24,10 @@ android {
 
         ksp {
             arg("room.schemaLocation", "$projectDir/schemas")
+        }
+
+        ndk {
+            abiFilters += listOf("arm64-v8a", "x86_64")
         }
     }
 
@@ -44,6 +49,11 @@ android {
     }
     buildFeatures {
         viewBinding = true
+    }
+
+    flavorDimensions += "pyVersion"
+    productFlavors {
+        create("py310") { dimension = "pyVersion" }
     }
 }
 
@@ -75,4 +85,18 @@ dependencies {
     implementation(libs.mpandroidchart)
 
     implementation(libs.swipemenurecyclerview)
+}
+
+chaquopy {
+    productFlavors {
+        getByName("py310") { version = "3.10" }
+    }
+
+    defaultConfig {
+        version = "3.10"
+
+        pip {
+            install("rake-nltk")
+        }
+    }
 }
