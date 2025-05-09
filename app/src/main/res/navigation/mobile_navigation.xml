@@ -34,6 +34,10 @@
         <action
             android:id="@+id/action_home_to_edit_call"
             app:destination="@id/navigation_edit_call" />
+
+        <action
+            android:id="@+id/action_home_to_keywords"
+            app:destination="@id/navigation_keywords" />
     </fragment>
 
     <fragment
@@ -177,4 +181,10 @@
             android:defaultValue="0"
             app:argType="integer" />
     </dialog>
+
+    <fragment
+        android:id="@+id/navigation_keywords"
+        android:name="com.bizsolutions.dealmate.ui.keywords.KeywordsFragment"
+        android:label="@string/title_keywords"
+        tools:layout="@layout/fragment_keywords" />
 </navigation>

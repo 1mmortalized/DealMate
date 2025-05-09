@@ -57,6 +57,13 @@
                 android:text="@string/tasks_section_title" />
 
             <Button
+                android:id="@+id/fragment_day_keywords_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.Material3.Button.IconButton"
+                app:icon="@drawable/ic_tag" />
+
+            <Button
                 android:id="@+id/fragment_day_add_task_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

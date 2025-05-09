@@ -28,13 +28,4 @@ data class TaskEntity(
 ) {
     @Ignore
     constructor(): this(0, "", LocalDate.now(), 3, "", 0, 0, false)
-
-    @Ignore
-    fun extractKeywords(): List<String> {
-        val stopWords = setOf("і", "в", "на", "з", "та", "що", "це", "по", "до", "за")
-        return title.lowercase()
-            .replace(Regex("[^a-zа-яіїєґ0-9 ]"), "")
-            .split(" ")
-            .filter { it.isNotBlank() && it !in stopWords }
-    }
 }

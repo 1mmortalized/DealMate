@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_keywords"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.bizsolutions.dealmate.ui.contacts.BottomFadingEdgeRecyclerView
+        android:id="@+id/fragment_keywords_rec_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:requiresFadingEdge="vertical"
+        android:fadingEdgeLength="25dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:clipToPadding="false" />
+</FrameLayout>

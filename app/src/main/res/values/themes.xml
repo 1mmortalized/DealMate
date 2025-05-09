@@ -85,4 +85,12 @@
         <item name="android:minWidth">48dp</item>
         <item name="iconGravity">textStart</item>
     </style>
+
+    <style name="Theme.DealMate.KeywordCardShape">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">12dp</item>
+        <item name="cornerSizeTopLeft">0dp</item>
+        <item name="cornerSizeBottomRight">12dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+    </style>
 </resources>

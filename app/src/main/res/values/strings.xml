@@ -3,6 +3,7 @@
     <string name="title_home">Home</string>
     <string name="title_contacts">Contacts</string>
     <string name="title_dashboard">Dashboard</string>
+    <string name="title_keywords">Keywords</string>
     <string name="title_deals">Deals</string>
     <string name="today_btn_txt">Today</string>
     <string name="events_section_title">Events</string>
