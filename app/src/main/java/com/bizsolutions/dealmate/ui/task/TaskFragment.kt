@@ -87,7 +87,11 @@ class TaskFragment : Fragment(), ToolbarMenuHandler {
             binding.fragmentTaskProgressSlider.clearOnChangeListeners()
             binding.fragmentTaskProgressSlider.addOnChangeListener { _, value, fromUser ->
                 binding.fragmentTaskProgressValueTxt.text = "%d%%".format(value.toInt())
-                if (fromUser) viewModel.updateProgress(newTask.id, value.toInt())
+                if (fromUser) viewModel.updateProgress(
+                    newTask.copy(
+                        progress = value.toInt()
+                    )
+                )
             }
         }
 

@@ -181,8 +181,9 @@ class DayFragment : Fragment() {
             },
             { task, isChecked ->
                 viewModel.updateTaskProgress(
-                    task.task.id,
-                    if (isChecked) 100 else 0
+                    task.task.copy(
+                        progress = if (isChecked) 100 else 0
+                    )
                 )
             })
         setupRecyclerView(

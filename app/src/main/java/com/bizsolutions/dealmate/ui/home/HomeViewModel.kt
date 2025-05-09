@@ -9,7 +9,9 @@ import com.bizsolutions.dealmate.db.TaskEntity
 import com.bizsolutions.dealmate.repository.CallRepository
 import com.bizsolutions.dealmate.repository.ClientRepository
 import com.bizsolutions.dealmate.repository.EventRepository
+import com.bizsolutions.dealmate.repository.KeywordRepository
 import com.bizsolutions.dealmate.repository.TaskRepository
+import com.chaquo.python.Python
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -20,6 +22,7 @@ class HomeViewModel @Inject constructor(
     val eventRepository: EventRepository,
     val taskRepository: TaskRepository,
     val callRepository: CallRepository,
+    val keywordRepository: KeywordRepository,
     clientRepository: ClientRepository
 ) : ViewModel() {
     fun getEventsByDate(date: LocalDate) = eventRepository.allEventsByDate(date).asLiveData()
@@ -72,9 +75,25 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun updateTaskProgress(id: Int, progress: Int) {
+    fun updateTaskProgress(task: TaskEntity) {
         viewModelScope.launch {
-            taskRepository.updateProgress(id, progress)
+            taskRepository.updateProgress(task.id, task.progress)
+
+            if (task.progress == 100 && !task.postponed) {
+                val py = Python.getInstance()
+                val keywordsModule = py.getModule("keywords")
+                val extractKeywordsFunction = keywordsModule["extract_keywords"]
+
+                val updatedTask = task.copy(postponed = true)
+                taskRepository.update(updatedTask)
+
+                val keywordsRaw = extractKeywordsFunction?.call(task.title)
+                val keywords = keywordsRaw?.asList()?.map { it.toJava(String::class.java) }
+
+                keywords?.forEach { word ->
+                    keywordRepository.increaseCompletedCount(word)
+                }
+            }
         }
     }
 

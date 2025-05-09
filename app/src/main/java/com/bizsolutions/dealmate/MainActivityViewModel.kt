@@ -1,16 +1,12 @@
 package com.bizsolutions.dealmate
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.bizsolutions.dealmate.db.ClientEntity
-import com.bizsolutions.dealmate.db.EventEntity
-import com.bizsolutions.dealmate.repository.ClientRepository
 import com.bizsolutions.dealmate.repository.KeywordRepository
 import com.bizsolutions.dealmate.repository.TaskRepository
+import com.chaquo.python.Python
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.sql.Date
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -20,6 +16,26 @@ class MainActivityViewModel @Inject constructor(
     val keywordRepository: KeywordRepository
 ) : ViewModel() {
 
-    suspend fun getOverdueUncompletedTasks(date: LocalDate) =
-        taskRepository.getOverdueUncompletedTasks(date)
+    fun updateKeywords() {
+        val py = Python.getInstance()
+        val keywordsModule = py.getModule("keywords")
+        val extractKeywordsFunction = keywordsModule["extract_keywords"]
+
+        viewModelScope.launch {
+            val today = LocalDate.now()
+            val uncompletedTasks = taskRepository.getOverdueUncompletedTasks(today)
+
+            uncompletedTasks.forEach { task ->
+                val updatedTask = task.copy(postponed = true)
+                taskRepository.update(updatedTask)
+
+                val keywordsRaw = extractKeywordsFunction?.call(task.title)
+                val keywords = keywordsRaw?.asList()?.map { it.toJava(String::class.java) }
+
+                keywords?.forEach { word ->
+                    keywordRepository.increasePostponedCount(word)
+                }
+            }
+        }
+    }
 }
