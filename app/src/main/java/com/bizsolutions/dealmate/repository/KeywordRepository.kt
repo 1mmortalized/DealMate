@@ -1,6 +1,5 @@
 package com.bizsolutions.dealmate.repository
 
-import com.bizsolutions.dealmate.db.ClientEntity
 import com.bizsolutions.dealmate.db.KeywordDao
 import com.bizsolutions.dealmate.db.KeywordEntity
 import kotlinx.coroutines.flow.Flow
@@ -8,6 +7,9 @@ import java.time.LocalDate
 
 class KeywordRepository(private val dao: KeywordDao) {
     val allKeywords: Flow<List<KeywordEntity>> = dao.getAllKeywords()
+
+    suspend fun getKeywords(keywords: List<String>) =
+        dao.getKeywords(keywords)
 
     suspend fun increasePostponedCount(word: String) {
         val existing = dao.getKeyword(word)

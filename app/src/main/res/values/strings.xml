@@ -52,10 +52,12 @@
         <item>Low</item>
         <item>Medium</item>
         <item>High</item>
+        <item>Auto</item>
     </string-array>
     <string name="priority_low">Low</string>
     <string name="priority_medium">Medium</string>
     <string name="priority_high">High</string>
+    <string name="priority_auto">Auto</string>
     <string name="client_name_hint">Client name</string>
     <string name="phone_hint">Phone</string>
     <string name="email_hint">Email</string>

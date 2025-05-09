@@ -20,4 +20,7 @@ interface KeywordDao {
 
     @Query("SELECT * FROM keywords WHERE word = :word")
     suspend fun getKeyword(word: String): KeywordEntity?
+
+    @Query ("SELECT * FROM keywords WHERE word IN (:keywords)")
+    suspend fun getKeywords(keywords: List<String>): List<KeywordEntity>
 }

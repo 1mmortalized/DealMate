@@ -32,6 +32,13 @@ enum class TaskPriority(
         R.drawable.ic_stat_1,
         com.google.android.material.R.attr.colorTertiaryContainer,
         com.google.android.material.R.attr.colorOnTertiaryContainer
+    ),
+    AUTO(
+        4,
+        R.string.priority_auto,
+        0,
+        0,
+        0
     );
 
     companion object {

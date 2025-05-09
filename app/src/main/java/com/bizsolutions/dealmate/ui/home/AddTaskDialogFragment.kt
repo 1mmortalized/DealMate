@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.bizsolutions.dealmate.R
 import com.bizsolutions.dealmate.databinding.FragmentDialogAddTaskBinding
@@ -19,6 +20,7 @@ import com.bizsolutions.dealmate.utils.showDatePicker
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
@@ -61,22 +63,31 @@ open class AddTaskDialogFragment : FullscreenDialogFragment() {
         newTask = TaskEntity()
 
         baseBinding.fragmentDialogBaseSaveBtn.setOnClickListener {
-            newTask?.let { task ->
-                task.title = binding.fdAddTaskTitleEdt.editText!!.text.toString()
-                task.date = pickedDate!!
-                task.priority = TaskPriority.fromLabel(
-                    requireContext(),
-                    binding.fdAddTaskPriorityEdtTxt.text.toString()
-                ).value
+            lifecycleScope.launch {
+                newTask?.let { task ->
+                    task.title = binding.fdAddTaskTitleEdt.editText!!.text.toString()
+                    task.date = pickedDate!!
+                    val priority = TaskPriority.fromLabel(
+                        requireContext(),
+                        binding.fdAddTaskPriorityEdtTxt.text.toString()
+                    )
 
-                task.clientId = clients.find {
-                    it.name == binding.fdAddTaskClientEdtTxt.text.toString()
-                }?.id ?: 0
+                    task.priority = if (priority != TaskPriority.AUTO)
+                        priority.value
+                    else {
+                        viewModel.suggestTaskPriority(task.title).value
+                    }
 
-                task.description = binding.fdAddTaskDescriptionEdtTxt.text.toString()
+                    task.clientId = clients.find {
+                        it.name == binding.fdAddTaskClientEdtTxt.text.toString()
+                    }?.id ?: 0
 
-                onPositiveButtonClicked(task)
+                    task.description = binding.fdAddTaskDescriptionEdtTxt.text.toString()
+
+                    onPositiveButtonClicked(task)
+                }
             }
+
             dialog!!.dismiss()
 
             val snackbar = Snackbar.make(

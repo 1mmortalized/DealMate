@@ -11,7 +11,9 @@ import com.bizsolutions.dealmate.repository.ClientRepository
 import com.bizsolutions.dealmate.repository.EventRepository
 import com.bizsolutions.dealmate.repository.KeywordRepository
 import com.bizsolutions.dealmate.repository.TaskRepository
-import com.chaquo.python.Python
+import com.bizsolutions.dealmate.ui.task.ScoredKeyword
+import com.bizsolutions.dealmate.ui.task.TaskPriority
+import com.bizsolutions.dealmate.utils.extractKeywords
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -80,16 +82,10 @@ class HomeViewModel @Inject constructor(
             taskRepository.updateProgress(task.id, task.progress)
 
             if (task.progress == 100 && !task.postponed) {
-                val py = Python.getInstance()
-                val keywordsModule = py.getModule("keywords")
-                val extractKeywordsFunction = keywordsModule["extract_keywords"]
-
                 val updatedTask = task.copy(postponed = true)
                 taskRepository.update(updatedTask)
 
-                val keywordsRaw = extractKeywordsFunction?.call(task.title)
-                val keywords = keywordsRaw?.asList()?.map { it.toJava(String::class.java) }
-
+                val keywords = extractKeywords(task.title)
                 keywords?.forEach { word ->
                     keywordRepository.increaseCompletedCount(word)
                 }
@@ -118,4 +114,38 @@ class HomeViewModel @Inject constructor(
     }
 
     val allClients = clientRepository.allClients.asLiveData()
+
+    suspend fun suggestTaskPriority(
+        taskText: String,
+    ): TaskPriority {
+        val extractedKeywords = extractKeywords(taskText)
+        if (extractedKeywords.isNullOrEmpty()) return TaskPriority.LOW
+
+        val keywordEntities = keywordRepository.getKeywords(extractedKeywords)
+
+        val scores = keywordEntities.mapNotNull { keyword ->
+            val total = keyword.completedCount + keyword.postponedCount
+            if (total == 0) return@mapNotNull null
+
+            val urgencyRatio = keyword.postponedCount.toDouble() / total
+            val recencyBonus = if (keyword.lastSeen != null &&
+                keyword.lastSeen >= LocalDate.now().minusDays(3)
+            ) 0.1 else 0.0
+
+            ScoredKeyword(
+                word = keyword.word,
+                priorityScore = urgencyRatio + recencyBonus
+            )
+        }
+
+        if (scores.isEmpty()) return TaskPriority.LOW
+
+        val averageScore = scores.map { it.priorityScore }.average()
+
+        return when {
+            averageScore >= 0.7 -> TaskPriority.HIGH
+            averageScore >= 0.4 -> TaskPriority.MEDIUM
+            else -> TaskPriority.LOW
+        }
+    }
 }
