@@ -11,6 +11,7 @@ import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.ZoneId
+import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 
@@ -57,7 +58,7 @@ fun showDatePicker(
     onDatePicked: (LocalDate) -> Unit
 ) {
     val selectionMillis = initialDate
-        ?.atStartOfDay(ZoneId.systemDefault())
+        ?.atStartOfDay(ZoneOffset.UTC)
         ?.toInstant()
         ?.toEpochMilli()
         ?: MaterialDatePicker.todayInUtcMilliseconds()
