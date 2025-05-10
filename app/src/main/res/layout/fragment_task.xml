@@ -185,8 +185,8 @@
                 android:valueTo="100"
                 android:stepSize="1"
                 app:tickVisible="false"
-                app:thumbTrackGapSize="0dp"
-                app:thumbHeight="0dp"
+                app:thumbTrackGapSize="4dp"
+                app:thumbHeight="24dp"
                 app:trackStopIndicatorSize="0dp"
                 app:trackHeight="16dp"
                 app:labelBehavior="gone" />
